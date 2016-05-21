@@ -111,11 +111,11 @@ navbarView model =
                         [ text "Building "
                         , span
                             [ class "label label-primary" ]
-                            [ text "123" ]
+                            [ text (toString model.queueStats.numBuilding) ]
                         , text " out of "
                         , span
                             [ class "label label-default" ]
-                            [ text "23045" ]
+                            [ text (toString model.queueStats.numWaiting) ]
                         , span
                             []
                             [ text " " ]
@@ -130,7 +130,7 @@ navbarView model =
                                 [ text "Builds in progress "
                                 , span
                                     [ class "label label-primary" ]
-                                    [ text "123" ]
+                                    [ text (toString model.queueStats.numBuilding) ]
                                 ]
                             ]
                         , li
@@ -140,7 +140,7 @@ navbarView model =
                                 [ text "Queue summary "
                                 , span
                                     [ class "label label-default" ]
-                                    [ text "23045" ]
+                                    [ text (toString model.queueStats.numWaiting) ]
                                 ]
                             ]
                         , li
@@ -150,7 +150,7 @@ navbarView model =
                                 [ text "Machines summary "
                                 , span
                                     [ class "label label-info" ]
-                                    [ text "12" ]
+                                    [ text (toString model.queueStats.numMachines) ]
                                 ]
                             ]
                         , li

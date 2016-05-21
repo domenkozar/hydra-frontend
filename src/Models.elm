@@ -35,11 +35,18 @@ type alias HydraConfig =
   { logo : String
   }
 
+type alias QueueStats =
+  { numBuilding : Int
+  , numWaiting : Int
+  , numMachines : Int
+  }
+
 type alias AppModel =
   { alert : Maybe Alert
   , hydraConfig : HydraConfig
   , projects : List Project
   , user : Maybe User
+  , queueStats : QueueStats
   }
 
 
@@ -48,6 +55,7 @@ initialModel =
   { alert = Nothing
   , user = Nothing
   , hydraConfig = HydraConfig "http://nixos.org/logo/nixos-logo-only-hires.png" -- TODO: downsize
+  , queueStats = QueueStats 124 32345 19
   , projects =
     [ { id = "nixos"
       , name = "NixOS"
