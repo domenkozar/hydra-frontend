@@ -1,0 +1,33 @@
+{
+  "name": "frontend",
+  "version": "1.0.0",
+  "description": "Hydra frontend",
+  "main": "index.js",
+  "dependencies": {
+    "bootstrap-loader": "^1.0.10",
+    "bootstrap-sass": "^3.3.6",
+    "css-loader": "^0.23.1",
+    "elm-hot-loader": "^0.3.2",
+    "elm-webpack-loader": "3.0.0",
+    "file-loader": "^0.8.5",
+    "imports-loader": "^0.6.5",
+    "jquery": "^2.2.3",
+    "node-sass": "^3.7.0",
+    "resolve-url-loader": "^1.4.3",
+    "sass-loader": "^3.2.0",
+    "style-loader": "^0.13.1",
+    "url-loader": "^0.5.7",
+    "webpack": "^1.13.0",
+    "webpack-dev-middleware": "^1.6.1",
+    "webpack-dev-server": "^1.14.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --optimize-minimize --bail",
+    "watch": "webpack --watch",
+    "dev": "webpack-dev-server --watch --hot --port 3000"
+  },
+  "author": "Domen Kozar",
+  "license": "ISC"
+}

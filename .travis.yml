@@ -1,0 +1,13 @@
+language: generic
+sudo: required
+dist: trusty
+before_install:
+  - bash <(curl -sS https://nixos.org/nix/install)
+  - source $HOME/.nix-profile/etc/profile.d/nix.sh
+  - sudo mkdir /etc/nix
+  - sudo sh -c 'echo "build-max-jobs = 4" > /etc/nix/nix.conf'
+install:
+  - nix-shell --run "npm i"
+  - nix-shell --run "elm package install -y"
+script:
+  - nix-build
