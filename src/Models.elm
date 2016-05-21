@@ -33,6 +33,8 @@ type alias Project =
 
 type alias HydraConfig =
   { logo : String
+  , hydraVersion : String
+  , nixVersion : String
   }
 
 type alias QueueStats =
@@ -54,7 +56,12 @@ initialModel : AppModel
 initialModel =
   { alert = Nothing
   , user = Nothing
-  , hydraConfig = HydraConfig "http://nixos.org/logo/nixos-logo-only-hires.png" -- TODO: downsize
+  , hydraConfig =
+    -- TODO: downsize logo, serve it with webpack
+    { logo = "http://nixos.org/logo/nixos-logo-only-hires.png"
+    , hydraVersion = "0.1.1234.abcdef"
+    , nixVersion = "1.12pre1234_abcdef"
+    }
   , queueStats = QueueStats 124 32345 19
   , projects =
     [ { id = "nixos"

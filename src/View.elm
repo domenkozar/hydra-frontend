@@ -31,11 +31,20 @@ view model =
           []
           [ a
               [ href "http://nixos.org/hydra/" ]
-              [ text "Hydra" ]
-          , em
+              [ text "Hydra " ]
+          , span
               []
-              [ text " 0.1.1234.abcdef"]
-          , text " (using nix-1.12pre1234_abcdef)"]
+              [ text model.hydraConfig.hydraVersion ]
+          , p
+              []
+              [ a
+                  [ href "http://nixos.org/nix/" ]
+                  [ text "Nix " ]
+              , span
+                  []
+                  [ text model.hydraConfig.nixVersion ]
+              ]
+          ]
         ]
       ])
     ]
