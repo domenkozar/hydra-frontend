@@ -51,7 +51,7 @@ projectView project =
               []
               [ a
                 [ href "#" ]
-                [ glyphicon "plus'sign"
+                [ glyphicon "plus-sign"
                 , text " Add a jobset"
                 ]
               ]
