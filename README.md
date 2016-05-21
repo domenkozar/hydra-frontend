@@ -1,4 +1,4 @@
-# Hydra Frontend
+Demo (no backend involved yet): http://hydra-frontend.domenkozar.com/
 
 See https://github.com/NixOS/hydra/issues/314 for reasoning why this
 repository exists.
