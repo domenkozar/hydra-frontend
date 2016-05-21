@@ -9,9 +9,9 @@ repository exists.
 Hot reloading is used for development, so you can start your
 development server:
 
-  $ nix-shell --run "npm i && npm run dev"
+    $ nix-shell --run "npm i && npm run dev"
 
-And open the browser by pointing it to http://localhost:3000/
+And open your browser and point it to [http://localhost:3000](http://localhost:3000)
 
 ## Current status
 
