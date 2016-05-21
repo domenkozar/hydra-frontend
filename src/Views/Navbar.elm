@@ -2,14 +2,57 @@ module Views.Navbar exposing (..)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
+import Html.Events exposing (onClick)
 
 import Msg exposing (..)
 import Models exposing (AppModel)
+import Utils exposing (..)
 
 
 navbarView : AppModel -> Html Msg
 navbarView model =
-  nav
+  let
+    dropdownText = case model.user of
+      Nothing ->
+        [ text "Sign in" ]
+      Just user ->
+        [ glyphicon "user"
+        , text (" " ++ user.name)
+        ]
+    dropdownButtons = case model.user of
+      Nothing ->
+        [ li
+            []
+            [ a
+                [ onClick (LoginUserClick Google) ]
+                [ text "using Google" ]
+            ]
+        , li
+            []
+            [ a
+                [ onClick (LoginUserClick Hydra) ]
+                [ text "using Hydra"]
+            ]
+        ]
+      Just user ->
+        [ li
+            []
+            [ a
+                [ onClick PreferencesClick ]
+                [ glyphicon "pencil"
+                , text " Preferences" ]
+            ]
+        , li
+            []
+            [ a
+                [ onClick LogoutUserClick ]
+                [ glyphicon "off"
+                , text " Sign out" ]
+
+            ]
+        ]
+
+  in nav
     [ class "navbar navbar-fixed-top navbar-default"
     , attribute "role" "navigation"
     ]
@@ -136,34 +179,26 @@ navbarView model =
                     ]
                 ]
             , ul
-                [ class "nav navbar-nav navbar-right" ]
-                [ li [ class "dropdown" ]
-                    [ a
-                        [ attribute "aria-expanded" "false"
-                        , attribute "aria-haspopup" "true"
-                        , class "dropdown-toggle"
-                        , attribute "data-toggle" "dropdown"
-                        , href "#"
-                        , attribute "role" "button" ]
-                        [ text "Sign in "
-                        , span [ class "caret" ]
+              [ class "nav navbar-nav navbar-right" ]
+              [ li
+                  [ class "dropdown" ]
+                  [ a
+                      [ attribute "aria-expanded" "false"
+                      , attribute "aria-haspopup" "true"
+                      , class "dropdown-toggle"
+                      , attribute "data-toggle" "dropdown"
+                      , href "#"
+                      , attribute "role" "button" ]
+                      (dropdownText
+                       ++ [ span
+                            [ class "caret" ]
                             []
-                        ]
-                    , ul [ class "dropdown-menu" ]
-                        [ li
-                            []
-                            [ a [ href "#" ]
-                                [ text "using Google" ]
-                            ]
-                        , li
-                            []
-                            [ a
-                                [ href "#" ]
-                                [ text "using Hydra"]
-                            ]
-                        ]
-                    ]
-                ]
+                      ])
+                  , ul
+                      [ class "dropdown-menu" ]
+                      dropdownButtons
+                  ]
+              ]
             , Html.form
                 [ class "nav navbar-form navbar-right"
                 , attribute "role" "search"

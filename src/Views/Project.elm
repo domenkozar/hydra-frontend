@@ -6,6 +6,8 @@ import List
 
 import Msg exposing (..)
 import Models exposing (Project)
+import Utils exposing (..)
+
 
 projectView : Project -> Html Msg
 projectView project =
@@ -41,10 +43,7 @@ projectView project =
               []
               [ a
                 [ href "#" ]
-                [ span
-                  [ attribute "aria-hidden" "true"
-                  , class "glyphicon glyphicon-trash" ]
-                  []
+                [ glyphicon "trash"
                 , text " Delete the project"
                 ]
               ]
@@ -52,10 +51,7 @@ projectView project =
               []
               [ a
                 [ href "#" ]
-                [ span
-                  [ attribute "aria-hidden" "true"
-                  , class "glyphicon glyphicon-plus-sign" ]
-                  []
+                [ glyphicon "plus'sign"
                 , text " Add a jobset"
                 ]
               ]
@@ -65,10 +61,7 @@ projectView project =
           [ class "btn btn-default"
           , type' "button" ]
           [ text "Configuration "
-          , span
-              [ class "glyphicon glyphicon-certificate"
-              , attribute "aria-hidden" "true"]
-              []
+          , glyphicon "certificate"
           ]
         ]
       ]

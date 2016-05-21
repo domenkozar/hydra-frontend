@@ -2,7 +2,6 @@ module View exposing (..)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
---import Html.Events exposing (onClick)
 import Maybe
 import List
 

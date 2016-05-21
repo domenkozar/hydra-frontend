@@ -6,6 +6,14 @@ type alias Alert =
   , msg : String
   }
 
+type alias User =
+  { id : String
+  , name : String
+  , email : String
+  , roles : List String
+  , recieveEvaluationErrors : Bool
+  }
+
 type alias Jobset =
   { id : String
   , name : String
@@ -31,12 +39,14 @@ type alias AppModel =
   { alert : Maybe Alert
   , hydraConfig : HydraConfig
   , projects : List Project
+  , user : Maybe User
   }
 
 
 initialModel : AppModel
 initialModel =
   { alert = Nothing
+  , user = Nothing
   , hydraConfig = HydraConfig "http://nixos.org/logo/nixos-logo-only-hires.png" -- TODO: downsize
   , projects =
     [ { id = "nixos"
