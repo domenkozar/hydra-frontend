@@ -108,21 +108,26 @@ projectView project =
               [ text jobset.description ]
             , td
                 []
-                [ span
+                [ optionalTag (jobset.succeeded > 0)
+                   (span
                     [ class "label label-success" ]
-                    [ text (toString jobset.succeeded) ]
-                , span
+                    [ text (toString jobset.succeeded) ])
+                , optionalTag (jobset.failed > 0)
+                    (span
                     []
-                    [ text " " ]
-                , span
+                    [ text " " ])
+                , optionalTag (jobset.failed > 0)
+                    (span
                     [ class "label label-danger" ]
-                    [ text (toString jobset.failed) ]
-                , span
+                    [ text (toString jobset.failed) ])
+                , optionalTag (jobset.queued > 0)
+                    (span
                     []
-                    [ text " " ]
-                , span
+                    [ text " " ])
+                , optionalTag (jobset.queued > 0)
+                    (span
                     [ class "label label-default" ]
-                    [ text (toString jobset.queued) ]
+                    [ text (toString jobset.queued) ])
               ]
             , td []
               [ text jobset.lastEvaluation ]

@@ -13,3 +13,9 @@ glyphicon kind
       , attribute "aria-hiden" "true"
       ]
       []
+
+
+optionalTag : Bool -> Html Msg -> Html Msg
+optionalTag doInclude html
+  = if doInclude
+    then html else text ""
