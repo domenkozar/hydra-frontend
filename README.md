@@ -13,3 +13,7 @@ development server:
 
 And open the browser by pointing it to http://localhost:3000/
 
+## Current status
+
+
+![2016-05-21-171606_2086x1059_scrot](https://cloud.githubusercontent.com/assets/126339/15449534/672c2e1e-1f78-11e6-96eb-294fdad53a83.png)
