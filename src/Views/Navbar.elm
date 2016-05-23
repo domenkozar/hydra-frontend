@@ -214,7 +214,7 @@ navbarView model =
                 , button
                     [ type' "submit"
                     , class "btn btn-default" ]
-                    [ text "Submit" ]
+                    [ fontAwesome "search fa-lg" ]
                 ]
             ]
         ]
