@@ -10,6 +10,8 @@
     "elm-hot-loader": "^0.3.2",
     "elm-webpack-loader": "3.0.0",
     "file-loader": "^0.8.5",
+    "font-awesome": "^4.6.1",
+    "font-awesome-webpack": "0.0.4",
     "imports-loader": "^0.6.5",
     "jquery": "^2.2.3",
     "node-sass": "^3.7.0",

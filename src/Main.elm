@@ -20,7 +20,6 @@ doInit : Cmd Msg
 doInit =
   Task.perform FetchFail FetchSucceed (Http.get decodeInit "/api/init")
 
-
 decodeInit : Json.Decoder (String)
 decodeInit = Json.succeed "a"
 --  Json.list (Json.succeed Event

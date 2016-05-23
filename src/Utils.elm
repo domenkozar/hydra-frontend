@@ -6,14 +6,16 @@ import Html.Attributes exposing (..)
 import Msg exposing (..)
 
 
-glyphicon : String -> Html Msg
-glyphicon kind
-  = span
-      [ class ("glyphicon glyphicon-" ++ kind)
-      , attribute "aria-hiden" "true"
-      ]
-      []
+fontAwesome : String -> Html Msg
+fontAwesome className
+  = fontAwesomeAttrs className []
 
+
+fontAwesomeAttrs : String -> List (Attribute a) -> Html a
+fontAwesomeAttrs className attrs
+   = i ([ class ("fa fa-" ++ className)
+       , attribute "aria-hideen" "true" ] ++ attrs)
+       []
 
 optionalTag : Bool -> Html Msg -> Html Msg
 optionalTag doInclude html

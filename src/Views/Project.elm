@@ -43,7 +43,7 @@ projectView project =
               []
               [ a
                 [ href "#" ]
-                [ glyphicon "trash"
+                [ fontAwesomeAttrs "trash fa-lg" [ style [("color", "red")]]
                 , text " Delete the project"
                 ]
               ]
@@ -51,7 +51,7 @@ projectView project =
               []
               [ a
                 [ href "#" ]
-                [ glyphicon "plus-sign"
+                [ fontAwesomeAttrs "plus-circle fa-lg" [ style [("color", "green")]]
                 , text " Add a jobset"
                 ]
               ]
@@ -61,7 +61,7 @@ projectView project =
           [ class "btn btn-default"
           , type' "button" ]
           [ text "Configuration "
-          , glyphicon "certificate"
+          , fontAwesome "cog fa-lg"
           ]
         ]
       ]

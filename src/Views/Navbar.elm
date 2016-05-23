@@ -16,7 +16,7 @@ navbarView model =
       Nothing ->
         [ text "Sign in" ]
       Just user ->
-        [ glyphicon "user"
+        [ fontAwesome "user fa-lg"
         , text (" " ++ user.name)
         ]
     dropdownButtons = case model.user of
@@ -39,14 +39,14 @@ navbarView model =
             []
             [ a
                 [ onClick PreferencesClick ]
-                [ glyphicon "pencil"
+                [ fontAwesome "edit fa-lg"
                 , text " Preferences" ]
             ]
         , li
             []
             [ a
                 [ onClick LogoutUserClick ]
-                [ glyphicon "off"
+                [ fontAwesomeAttrs "power-off fa-lg" [ style [("color", "red")]]
                 , text " Sign out" ]
 
             ]
