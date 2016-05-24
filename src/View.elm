@@ -7,8 +7,10 @@ import List
 
 import Msg exposing (..)
 import Models exposing (..)
+import LiveSearch
 import Views.Project exposing (projectView)
 import Views.Navbar exposing (navbarView)
+import Utils exposing (..)
 
 
 view : AppModel -> Html Msg
@@ -22,9 +24,15 @@ view model =
       ([ alertView model.alert
       , h1
           []
-          [ text "Projects"]
+          [ text "Projects "
+          , button
+              [ type' "submit"
+              , class "btn btn-primary" ]
+              [ fontAwesome "plus-circle fa-lg"
+              , text " New" ]
+          ]
       , br [] []
-      ] ++ (List.map projectView model.projects) ++
+      ] ++ (List.map projectView (LiveSearch.search model.projects)) ++
       [ footer
         [ class "text-center" ]
         [ small

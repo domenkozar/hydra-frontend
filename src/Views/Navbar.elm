@@ -1,11 +1,13 @@
 module Views.Navbar exposing (..)
 
 import Html exposing (..)
+import Html.App as App
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick)
 
 import Msg exposing (..)
 import Models exposing (AppModel)
+import LiveSearch
 import Utils exposing (..)
 
 
@@ -203,14 +205,7 @@ navbarView model =
                 [ class "nav navbar-form navbar-right"
                 , attribute "role" "search"
                 ]
-                [ div
-                  [ class "form-group" ]
-                  [ input
-                    [ type' "text"
-                    , class "form-control"
-                    , placeholder "Search" ]
-                    []
-                  ]
+                [ App.map LiveSearchMsg (LiveSearch.view model)
                 , button
                     [ type' "submit"
                     , class "btn btn-default" ]

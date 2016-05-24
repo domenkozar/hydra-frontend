@@ -22,6 +22,7 @@ type alias Jobset =
   , failed : Int
   , succeeded : Int
   , lastEvaluation : String
+  , isShown : Bool
   }
 
 type alias Project =
@@ -29,6 +30,7 @@ type alias Project =
   , name : String
   , description : String
   , jobsets : List Jobset
+  , isShown : Bool
   }
 
 type alias HydraConfig =
@@ -49,6 +51,7 @@ type alias AppModel =
   , projects : List Project
   , user : Maybe User
   , queueStats : QueueStats
+  , clearSearch : Bool
   }
 
 
@@ -56,6 +59,7 @@ initialModel : AppModel
 initialModel =
   { alert = Nothing
   , user = Nothing
+  , clearSearch = False
   , hydraConfig =
     -- TODO: downsize logo, serve it with webpack
     { logo = "http://nixos.org/logo/nixos-logo-only-hires.png"
@@ -67,6 +71,7 @@ initialModel =
     [ { id = "nixos"
       , name = "NixOS"
       , description = "the purely functional Linux distribution"
+      , isShown = True
       , jobsets =
         [ { id = "release-16.03"
           , name = "release-16.03"
@@ -75,6 +80,7 @@ initialModel =
           , failed = 275
           , succeeded = 24315
           , lastEvaluation = "2016-05-21 13:57:13"
+          , isShown = True
           }
         , { id = "trunk-combined"
           , name = "trunk-combined"
@@ -83,12 +89,14 @@ initialModel =
           , failed = 406
           , succeeded = 24243
           , lastEvaluation = "2016-05-21 13:57:03"
+          , isShown = True
           }
         ]
       }
     , { id = "nix"
       , name = "Nix"
       , description = "the purely functional package manager"
+      , isShown = True
       , jobsets =
         [ { id = "master"
           , name = "master"
@@ -96,6 +104,7 @@ initialModel =
           , queued = 0
           , failed = 33
           , succeeded = 1
+          , isShown = True
           , lastEvaluation = "2016-05-21 13:57:13"
           }
         ]
@@ -103,10 +112,12 @@ initialModel =
     , { id = "nixpkgs"
       , name = "Nixpkgs"
       , description = "Nix Packages collection"
+      , isShown = True
       , jobsets =
         [ { id = "trunk"
           , name = "trunk"
           , description = "Trunk"
+          , isShown = True
           , queued = 0
           , failed = 7798
           , succeeded = 24006
@@ -115,6 +126,7 @@ initialModel =
         , { id = "staging"
           , name = "staging"
           , description = "Staging"
+          , isShown = True
           , queued = 0
           , failed = 31604
           , succeeded = 63
@@ -125,6 +137,7 @@ initialModel =
     , { id = "nixops"
       , name = "NixOps"
       , description = "Deploying NixOS machines"
+      , isShown = True
       , jobsets = []
       }
     ]

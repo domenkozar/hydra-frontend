@@ -6,6 +6,7 @@ import List
 
 import Msg exposing (..)
 import Models exposing (Project)
+import LiveSearch
 import Utils exposing (..)
 
 
@@ -131,6 +132,6 @@ projectView project =
               ]
             , td []
               [ text jobset.lastEvaluation ]
-            ]) project.jobsets)])
+            ]) (LiveSearch.search project.jobsets))])
         )
     ]

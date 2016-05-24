@@ -2,11 +2,12 @@ module Update exposing (..)
 
 import Models exposing (..)
 import Msg exposing (..)
+import LiveSearch
 
 
 update : Msg -> AppModel -> ( AppModel, Cmd Msg )
-update action model =
-  case action of
+update msg model =
+  case msg of
 
     FetchSucceed init ->
       ( model, Cmd.none )
@@ -37,3 +38,8 @@ update action model =
 
     PreferencesClick ->
       ( model, Cmd.none )
+
+    LiveSearchMsg searchmsg ->
+      let
+        (newmodel, cmds) = LiveSearch.update searchmsg model
+      in (newmodel, Cmd.map LiveSearchMsg cmds)
