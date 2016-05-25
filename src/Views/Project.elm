@@ -8,6 +8,7 @@ import Msg exposing (..)
 import Models exposing (Project)
 import LiveSearch
 import Utils exposing (..)
+import Components.Help exposing (..)
 
 
 projectView : Project -> Html Msg
@@ -77,7 +78,9 @@ projectView project =
                   [ th
                     [ style [("width", "15%")]]
                     [ strong []
-                      [ text "Jobset" ]
+                      [ text "Jobset"
+                      , popoverJobsetHelp
+                      ]
                     ]
                   , th
                     [ style [("width", "40%")]]

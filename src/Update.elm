@@ -1,4 +1,4 @@
-module Update exposing (..)
+port module Update exposing (..)
 
 import Models exposing (..)
 import Msg exposing (..)
@@ -10,10 +10,10 @@ update msg model =
   case msg of
 
     FetchSucceed init ->
-      ( model, Cmd.none )
+      ( model, popoverInit ())
 
     FetchFail msg ->
-      ( model, Cmd.none )
+      ( model, popoverInit ())
 
 
     LoginUserClick loginType ->
@@ -43,3 +43,8 @@ update msg model =
       let
         (newmodel, cmds) = LiveSearch.update searchmsg model
       in (newmodel, Cmd.map LiveSearchMsg cmds)
+
+
+-- Ports
+
+port popoverInit : () -> Cmd msg
