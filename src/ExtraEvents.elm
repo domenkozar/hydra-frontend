@@ -13,5 +13,5 @@ onEscape msg =
 isEscape : Int -> Result String ()
 isEscape code =
   case code of
-    13 -> Ok ()
+    27 -> Ok ()
     _ -> Err "not the right key code"
