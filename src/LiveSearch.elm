@@ -6,12 +6,12 @@ import Html.Events exposing (onInput)
 import String
 
 import Models exposing (..)
-import ExtraEvents exposing (onKeyPress)
+import ExtraEvents exposing (onEscape)
 
 
 type Msg
   = SearchInput String
-  | SearchKeydown Int
+  | SearchEscape
 
 
 compareCaseInsensitve : String -> String -> Bool
@@ -57,11 +57,9 @@ update msg model =
       in ( { model | projects = newprojects, clearSearch = False }, Cmd.none )
 
     -- on Escape, clear search bar and return all projects/jobsets
-    SearchKeydown 27 ->
+    SearchEscape ->
       ( { model | clearSearch = True,
                   projects = List.map (searchProject "") model.projects }, Cmd.none )
-    SearchKeydown code ->
-      ( model, Cmd.none )
 
 
 view : AppModel -> Html Msg
@@ -73,7 +71,7 @@ view model =
       , class "form-control"
       , placeholder "Search"
       , onInput SearchInput
-      , onKeyPress (\code -> SearchKeydown code)
+      , onEscape SearchEscape
       ] ++ if model.clearSearch
            then [ value "" ]
            else [])
