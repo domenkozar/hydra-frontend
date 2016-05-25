@@ -54,12 +54,13 @@ update msg model =
     SearchInput searchstring ->
       let
         newprojects = List.map (searchProject searchstring) model.projects
-      in ( { model | projects = newprojects, clearSearch = False }, Cmd.none )
+      in ( { model | projects = newprojects
+                   , searchString = searchstring }, Cmd.none )
 
     -- on Escape, clear search bar and return all projects/jobsets
     SearchEscape ->
-      ( { model | clearSearch = True,
-                  projects = List.map (searchProject "") model.projects }, Cmd.none )
+      ( { model | searchString = ""
+                , projects = List.map (searchProject "") model.projects }, Cmd.none )
 
 
 view : AppModel -> Html Msg
@@ -67,13 +68,12 @@ view model =
   div
     [ class "form-group" ]
     [ input
-      ([ type' "text"
+      [ type' "text"
       , class "form-control"
       , placeholder "Search"
       , onInput SearchInput
       , onEscape SearchEscape
-      ] ++ if model.clearSearch
-           then [ value "" ]
-           else [])
-      []
+      , value model.searchString
+      ]
+      [ ]
     ]

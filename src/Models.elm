@@ -51,7 +51,7 @@ type alias AppModel =
   , projects : List Project
   , user : Maybe User
   , queueStats : QueueStats
-  , clearSearch : Bool
+  , searchString : String
   }
 
 
@@ -59,7 +59,7 @@ initialModel : AppModel
 initialModel =
   { alert = Nothing
   , user = Nothing
-  , clearSearch = False
+  , searchString = ""
   , hydraConfig =
     -- TODO: downsize logo, serve it with webpack
     { logo = "http://nixos.org/logo/nixos-logo-only-hires.png"
