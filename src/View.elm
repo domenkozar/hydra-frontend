@@ -15,7 +15,9 @@ import Utils exposing (..)
 
 view : AppModel -> Html Msg
 view model =
-  div
+  let
+    projects = List.map projectView (LiveSearch.search model.projects)
+  in div
     []
     [ navbarView model
     , div
@@ -32,7 +34,11 @@ view model =
               , text " New" ]
           ]
       , br [] []
-      ] ++ (List.map projectView (LiveSearch.search model.projects)) ++
+      ] ++ if List.isEmpty projects
+           then [ p
+                    [ class "text-center lead" ]
+                    [ text "Zero projects. Maybe add one?" ] ]
+           else projects ++
       [ footer
         [ class "text-center" ]
         [ small
