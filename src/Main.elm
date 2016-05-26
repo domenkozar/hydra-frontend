@@ -13,7 +13,8 @@ import View exposing (..)
 
 
 init : ( AppModel, Cmd Msg )
-init = ( initialModel, doInit )
+init = ( initialModel, Cmd.batch [ title "Hydra"
+                                 , doInit ] )
 
 
 doInit : Cmd Msg
