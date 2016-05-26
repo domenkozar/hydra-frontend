@@ -21,7 +21,7 @@ projectView project =
         [ class "lead" ]
         [ text (project.name ++ " ") ]
       , small
-        []
+        [ class "hidden-xs"]
         [ text ("(" ++ project.description ++ ")") ]
       , div
         [ attribute "aria-label" "..."
@@ -76,7 +76,7 @@ projectView project =
               [ tr
                   []
                   [ th
-                    [ style [("width", "15%")]]
+                    [ style [("width", "15%"), ("min-width", "85px")]]
                     [ strong []
                       [ text "Jobset"
                       , popoverJobsetHelp
