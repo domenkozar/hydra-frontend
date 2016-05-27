@@ -1,6 +1,5 @@
 module Models exposing (..)
 
-
 type alias Alert =
   { kind : String
   , msg : String

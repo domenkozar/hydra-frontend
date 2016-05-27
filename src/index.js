@@ -15,5 +15,5 @@ app.ports.popoverInit.subscribe(function() {
 });
 
 app.ports.title.subscribe(function(title) {
-  document.title = title;
+  document.title = "Hydra - " + title;
 });
