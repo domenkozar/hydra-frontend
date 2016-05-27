@@ -1,8 +1,12 @@
 port module Update exposing (..)
 
+import Navigation
+
 import Models exposing (..)
 import Msg exposing (..)
 import LiveSearch
+import Page exposing (..)
+import Urls exposing (pageToURL, pageToTitle)
 
 
 update : Msg -> AppModel -> ( AppModel, Cmd Msg )
@@ -14,7 +18,6 @@ update msg model =
 
     FetchFail msg ->
       ( model, popoverInit ())
-
 
     LoginUserClick loginType ->
         let
@@ -43,6 +46,21 @@ update msg model =
       let
         (newmodel, cmds) = LiveSearch.update searchmsg model
       in (newmodel, Cmd.map LiveSearchMsg cmds)
+
+    NewPage page ->
+      ( model, Navigation.newUrl (pageToURL page))
+
+
+urlUpdate : Result String Page -> AppModel -> (AppModel, Cmd b)
+urlUpdate result model =
+  case Debug.log "urlUpdate" result of
+    Err _ ->
+      -- TODO: render alert box here
+      ( model, Cmd.none )
+
+    Ok page ->
+      ( { model | currentPage = page }, title (pageToTitle page) )
+
 
 
 -- Ports

@@ -2,21 +2,46 @@ module Views.Project exposing (..)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
+import Html.Events exposing (onClick)
 import List
 
 import Msg exposing (..)
 import Models exposing (Project)
+import Page exposing (Page)
 import LiveSearch
 import Utils exposing (..)
 import Components.Help exposing (..)
 
 
-projectView : Project -> Html Msg
-projectView project =
+projectsView : List Project -> List (Html Msg)
+projectsView projects =
+    let
+      newprojects = List.map renderProject (LiveSearch.search projects)
+    in
+    [ h1
+        [ style [("margin-bottom", "30px")]]
+        [ text "Projects "
+        , button
+            [ type' "submit"
+            , class "btn btn-primary" ]
+            [ fontAwesome "plus-circle fa-lg"
+            , text " New" ]
+        ]
+    ] ++ if List.isEmpty newprojects
+         then render404 "Zero projects. Maybe add one?"
+         else newprojects
+
+projectView : Project -> List (Html Msg)
+projectView project = [renderProject project]
+
+
+renderProject : Project -> Html Msg
+renderProject project =
   div
     [ class "panel panel-default" ]
-    [ div
-      [ class "panel-heading clearfix" ]
+    [ a
+      [ class "panel-heading clearfix btn-block"
+      , onClick (NewPage (Page.Project project.name)) ]
       [ span
         [ class "lead" ]
         [ text (project.name ++ " ") ]

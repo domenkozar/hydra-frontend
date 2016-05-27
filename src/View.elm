@@ -5,40 +5,24 @@ import Html.Attributes exposing (..)
 import Maybe
 import List
 
-import Msg exposing (..)
+import Msg exposing (Msg)
 import Models exposing (..)
-import LiveSearch
-import Views.Project exposing (projectView)
+import Views.Project exposing (projectView, projectsView)
 import Views.Navbar exposing (navbarView)
+import Page exposing (..)
 import Utils exposing (..)
 
 
 view : AppModel -> Html Msg
 view model =
-  let
-    projects = List.map projectView (LiveSearch.search model.projects)
-  in div
+  div
     []
     [ navbarView model
     , div
       [ class "container" ]
       -- TODO: breadcrumbs
-      ([ alertView model.alert
-      , h1
-          []
-          [ text "Projects "
-          , button
-              [ type' "submit"
-              , class "btn btn-primary" ]
-              [ fontAwesome "plus-circle fa-lg"
-              , text " New" ]
-          ]
-      , br [] []
-      ] ++ if List.isEmpty projects
-           then [ p
-                    [ class "text-center lead" ]
-                    [ text "Zero projects. Maybe add one?" ] ]
-           else projects ++
+      ([ alertView model.alert ]
+      ++ pageToView model ++
       [ footer
         [ class "text-center" ]
         [ small
@@ -62,6 +46,20 @@ view model =
         ]
       ])
     ]
+
+
+pageToView : AppModel -> List (Html Msg)
+pageToView model =
+  case model.currentPage of
+    Home ->
+      projectsView model.projects
+    Project name ->
+      case List.head (List.filter (\p -> p.name == name) model.projects) of
+        Just project -> projectView project
+        Nothing -> render404 ("Project " ++ name ++ " does not exist.")
+    Jobset project jobset ->
+      []
+
 
 alertView : Maybe Alert -> Html Msg
 alertView alert =

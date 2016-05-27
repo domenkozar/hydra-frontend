@@ -1,20 +1,25 @@
 module Main exposing (..)
 
-import Html.App as Html
-import Task
 import Http
+import Task
 import Json.Decode as Json
 import Json.Decode exposing ((:=))
+import Navigation
 
 import Msg exposing (..)
 import Models exposing (..)
+import Page exposing (Page)
 import Update exposing (..)
 import View exposing (..)
+import Urls exposing (urlParser)
 
 
-init : ( AppModel, Cmd Msg )
-init = ( initialModel, Cmd.batch [ title "Projects"
-                                 , doInit ] )
+init : Result String Page -> ( AppModel, Cmd Msg )
+init result =
+  let
+   (model, cmds) = urlUpdate result (initialModel Page.Home)
+  in ( model, Cmd.batch [ doInit
+                        , cmds ] )
 
 
 doInit : Cmd Msg
@@ -30,10 +35,11 @@ decodeInit = Json.succeed "a"
 
 main : Program Never
 main =
-  Html.program
+  Navigation.program (Navigation.makeParser urlParser)
     { init = init
     , update = update
     , view = view
+    , urlUpdate = urlUpdate
     , subscriptions = subscriptions
     }
 

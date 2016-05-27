@@ -1,5 +1,8 @@
 module Models exposing (..)
 
+import Page exposing (..)
+
+
 type alias Alert =
   { kind : String
   , msg : String
@@ -51,13 +54,15 @@ type alias AppModel =
   , user : Maybe User
   , queueStats : QueueStats
   , searchString : String
+  , currentPage : Page
   }
 
 
-initialModel : AppModel
-initialModel =
+initialModel : Page -> AppModel
+initialModel page =
   { alert = Nothing
   , user = Nothing
+  , currentPage = page
   , searchString = ""
   , hydraConfig =
     -- TODO: downsize logo, serve it with webpack
