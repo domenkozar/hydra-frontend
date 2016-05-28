@@ -5,6 +5,7 @@ import Html.Attributes exposing (..)
 import Maybe
 import List
 
+import Components.Breadcrumbs exposing (breadCrumbs)
 import Msg exposing (Msg)
 import Models exposing (..)
 import Views.Project exposing (projectView, projectsView, newProjectView)
@@ -20,8 +21,8 @@ view model =
     [ navbarView model
     , div
       [ class "container" ]
-      -- TODO: breadcrumbs
       [ (alertView model.alert)
+      , (breadCrumbs model)
       , div
           [ class "row" ]
           (pageToView model)
@@ -64,6 +65,7 @@ pageToView model =
       newProjectView model
     Jobset project jobset ->
       []
+
 
 
 alertView : Maybe Alert -> Html Msg

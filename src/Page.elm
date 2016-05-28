@@ -12,6 +12,6 @@ type Page
   | NewProject
   | Jobset String String
 
-
+{-| typically used to simuate a link -}
 pointer : Html.Attribute a
 pointer = style [("cursor", "pointer")]
