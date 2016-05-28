@@ -31,23 +31,25 @@ renderBreadcrumbs breadcrumbs =
          li
            [ class "active" ]
            [ text breadcrumb.name ]
-  in ol
-    [ class "breadcrumb" ]
-    (List.map render breadcrumbs)
+  in if List.length breadcrumbs == 1
+     then text ""
+     else ol
+            [ class "breadcrumb" ]
+            (List.map render breadcrumbs)
 
 
 breadCrumbs : AppModel -> Html Msg
 breadCrumbs model =
   let
-    home = [Breadcrumb "Home" (Just Home)]
+    home = [ Breadcrumb "Home" (Just Home) ]
     breadcrumbs = case model.currentPage of
       Home ->
-        []
+        [ ]
       NewProject ->
         [ Breadcrumb "New Project" Nothing ]
       Project project ->
         [ Breadcrumb project Nothing ]
       Jobset project jobset ->
-        [ Breadcrumb project Nothing
-        , Breadcrumb jobset (Just model.currentPage) ]
+        [ Breadcrumb project (Just (Page.Project project))
+        , Breadcrumb jobset Nothing ]
   in renderBreadcrumbs (home ++ breadcrumbs)
