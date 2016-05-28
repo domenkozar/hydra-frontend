@@ -7,7 +7,7 @@ import List
 
 import Msg exposing (Msg)
 import Models exposing (..)
-import Views.Project exposing (projectView, projectsView)
+import Views.Project exposing (projectView, projectsView, newProjectView)
 import Views.Navbar exposing (navbarView)
 import Page exposing (..)
 import Utils exposing (..)
@@ -21,10 +21,13 @@ view model =
     , div
       [ class "container" ]
       -- TODO: breadcrumbs
-      ([ alertView model.alert ]
-      ++ pageToView model ++
-      [ footer
-        [ class "text-center" ]
+      [ (alertView model.alert)
+      , div
+          [ class "row" ]
+          (pageToView model)
+      , footer
+        [ class "text-center"
+        , style [("margin-top", "30px")] ]
         [ small
           []
           [ a
@@ -44,7 +47,7 @@ view model =
               ]
           ]
         ]
-      ])
+      ]
     ]
 
 
@@ -57,6 +60,8 @@ pageToView model =
       case List.head (List.filter (\p -> p.name == name) model.projects) of
         Just project -> projectView project
         Nothing -> render404 ("Project " ++ name ++ " does not exist.")
+    NewProject ->
+      newProjectView model
     Jobset project jobset ->
       []
 

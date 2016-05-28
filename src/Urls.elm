@@ -19,6 +19,7 @@ pageParser =
   oneOf
     [ format Home (s "")
     , format Project (s "project" </> string)
+    , format NewProject (s "create-project")
     , format Jobset (s "jobset" </> string </> string)
     ]
 
@@ -28,6 +29,7 @@ pageToURL page =
   case page of
     Home -> "/"
     Project name -> "/project/" ++ name
+    NewProject -> "/create-project"
     Jobset project jobset -> "/jobset/" ++ project ++ "/" ++ jobset
 
 
@@ -36,4 +38,5 @@ pageToTitle page =
    case page of
      Home -> "Projects"
      Project name -> "Project " ++ name
+     NewProject -> "New Project"
      Jobset project jobset -> "Jobset " ++ jobset ++ " of project " ++ project

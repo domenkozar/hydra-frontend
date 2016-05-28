@@ -50,6 +50,10 @@ update msg model =
     NewPage page ->
       ( model, Navigation.newUrl (pageToURL page))
 
+    ClickCreateProject ->
+      -- TODO: http
+      ( model, Cmd.none )
+
 
 urlUpdate : Result String Page -> AppModel -> (AppModel, Cmd b)
 urlUpdate result model =

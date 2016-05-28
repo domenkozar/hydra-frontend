@@ -85,6 +85,7 @@ navbarView model =
             , a
               [ class "navbar-brand"
               , onClick (NewPage Page.Home)
+              , Page.pointer
               , style [("padding", "0")]
               ]
               [ if model.hydraConfig.logo == ""

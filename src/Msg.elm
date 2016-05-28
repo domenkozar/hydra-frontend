@@ -17,3 +17,4 @@ type Msg
   | PreferencesClick
   | LiveSearchMsg LiveSearch.Msg
   | NewPage Page.Page
+  | ClickCreateProject
