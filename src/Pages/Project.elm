@@ -6,12 +6,13 @@ import Html.Events exposing (onClick)
 import Maybe
 import List
 
+import Components.LiveSearch exposing (search)
+import Components.Help exposing (..)
 import Msg exposing (..)
 import Models exposing (Project, AppModel)
 import Page exposing (Page)
-import Components.LiveSearch exposing (search)
 import Utils exposing (..)
-import Components.Help exposing (..)
+
 
 
 projectsView : List Project -> List (Html Msg)
@@ -234,8 +235,9 @@ renderProject project =
             []
             [ td []
               [ a
-                [ href jobset.id ]
-                [ text jobset.name ]
+                  [ onClick (NewPage (Page.Jobset project.name jobset.id))
+                  , Page.pointer ]
+                  [ text jobset.name ]
               ]
             , td []
               [ text jobset.description ]
