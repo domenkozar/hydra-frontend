@@ -57,13 +57,19 @@ update msg model =
 
 urlUpdate : Result String Page -> AppModel -> (AppModel, Cmd b)
 urlUpdate result model =
-  case Debug.log "urlUpdate" result of
-    Err _ ->
-      -- TODO: render alert box here
-      ( model, Cmd.none )
+  case result of
+    Err msg ->
+      let
+        msg = (Debug.log "urlUpdate:" msg)
+        alert = { kind = Danger
+                , msg = "Given URL returned 404."
+                }
+      in { model| alert = Just alert} ! []
 
     Ok page ->
-      ( { model | currentPage = page }, title (pageToTitle page) )
+    ( { model | currentPage = page
+      , alert = Nothing }
+    , title (pageToTitle page) )
 
 
 
