@@ -71,6 +71,12 @@ alertView alert =
   case alert of
     Nothing -> div [] []
     Just value ->
-      div
-      [ class ("alert alert-" ++ value.kind) ]
-      [ text ("Error: " ++ value.msg) ]
+      let
+        kind = case value.kind of
+          Danger -> "danger"
+          Success -> "success"
+          Info -> "info"
+          Warning -> "warning"
+      in div
+           [ class ("alert alert-" ++ kind) ]
+           [ text ("Error: " ++ value.msg) ]

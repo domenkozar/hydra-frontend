@@ -3,8 +3,10 @@ module Models exposing (..)
 import Page exposing (..)
 
 
+type AlertType = Danger | Info | Warning | Success
+
 type alias Alert =
-  { kind : String
+  { kind : AlertType
   , msg : String
   }
 
