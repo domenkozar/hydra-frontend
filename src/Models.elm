@@ -58,11 +58,11 @@ type alias AppModel =
   }
 
 
-initialModel : Page -> AppModel
-initialModel page =
+initialModel : AppModel
+initialModel =
   { alert = Nothing
   , user = Nothing
-  , currentPage = page
+  , currentPage = Page.Home
   , searchString = ""
   , hydraConfig =
     -- TODO: downsize logo, serve it with webpack

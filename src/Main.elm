@@ -17,14 +17,14 @@ import Urls exposing (urlParser)
 init : Result String Page -> ( AppModel, Cmd Msg )
 init result =
   let
-   (model, cmds) = urlUpdate result (initialModel Page.Home)
-  in ( model, Cmd.batch [ doInit
-                        , cmds ] )
+   (model, cmds) = urlUpdate result initialModel
+  in model ! [ doInit, cmds ]
 
 
 doInit : Cmd Msg
 doInit =
   Task.perform FetchFail FetchSucceed (Http.get decodeInit "/api/init")
+
 
 decodeInit : Json.Decoder (String)
 decodeInit = Json.succeed "a"
@@ -32,6 +32,12 @@ decodeInit = Json.succeed "a"
 --    |: ("id" := Json.int)
 --    |: ("title" := Json.string)
 --  )
+
+
+subscriptions : AppModel -> Sub Msg
+subscriptions model =
+  Sub.none
+
 
 main : Program Never
 main =
@@ -42,7 +48,3 @@ main =
     , urlUpdate = urlUpdate
     , subscriptions = subscriptions
     }
-
-subscriptions : AppModel -> Sub Msg
-subscriptions model =
-  Sub.none
