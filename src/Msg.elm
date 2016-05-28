@@ -2,7 +2,7 @@ module Msg exposing (..)
 
 import Http
 
-import LiveSearch
+import Components.LiveSearch as LiveSearch
 import Page
 
 type LoginType

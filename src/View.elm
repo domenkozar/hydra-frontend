@@ -6,10 +6,10 @@ import Maybe
 import List
 
 import Components.Breadcrumbs exposing (breadCrumbs)
+import Components.Navbar exposing (navbarView)
+import Pages.Project exposing (projectView, projectsView, newProjectView)
 import Msg exposing (Msg)
 import Models exposing (..)
-import Views.Project exposing (projectView, projectsView, newProjectView)
-import Views.Navbar exposing (navbarView)
 import Page exposing (..)
 import Utils exposing (..)
 

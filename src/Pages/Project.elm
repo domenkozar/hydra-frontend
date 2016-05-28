@@ -1,4 +1,4 @@
-module Views.Project exposing (..)
+module Pages.Project exposing (..)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
@@ -9,7 +9,7 @@ import List
 import Msg exposing (..)
 import Models exposing (Project, AppModel)
 import Page exposing (Page)
-import LiveSearch
+import Components.LiveSearch exposing (search)
 import Utils exposing (..)
 import Components.Help exposing (..)
 
@@ -17,7 +17,7 @@ import Components.Help exposing (..)
 projectsView : List Project -> List (Html Msg)
 projectsView projects =
     let
-      newprojects = List.map renderProject (LiveSearch.search projects)
+      newprojects = List.map renderProject (search projects)
     in
     [ h1
         [ style [("margin-bottom", "30px")]]
@@ -264,6 +264,6 @@ renderProject project =
               ]
             , td []
               [ text jobset.lastEvaluation ]
-            ]) (LiveSearch.search project.jobsets))])
+            ]) (search project.jobsets))])
         )
     ]

@@ -4,7 +4,7 @@ import Navigation
 
 import Models exposing (..)
 import Msg exposing (..)
-import LiveSearch
+import Components.LiveSearch as LiveSearch
 import Page exposing (..)
 import Urls exposing (pageToURL, pageToTitle)
 

@@ -1,4 +1,4 @@
-module Views.Navbar exposing (..)
+module Components.Navbar exposing (..)
 
 import Html exposing (..)
 import Html.App as App
@@ -7,7 +7,7 @@ import Html.Events exposing (onClick)
 
 import Msg exposing (..)
 import Models exposing (AppModel)
-import LiveSearch
+import Components.LiveSearch as LiveSearch
 import Page exposing (Page)
 import Utils exposing (..)
 

@@ -1,4 +1,4 @@
-module LiveSearch exposing (update, view, search, Msg)
+module Components.LiveSearch exposing (update, view, search, Msg)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
