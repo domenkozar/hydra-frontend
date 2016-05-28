@@ -8,6 +8,7 @@ import Html.Events exposing (onClick)
 import Msg exposing (..)
 import Models exposing (AppModel)
 import LiveSearch
+import Page exposing (Page)
 import Utils exposing (..)
 
 
@@ -83,7 +84,8 @@ navbarView model =
               ]
             , a
               [ class "navbar-brand"
-              , href "c.uri_for(c.controller('Root').action_for('index'))"
+              , onClick (NewPage Page.Home)
+              , Page.pointer
               , style [("padding", "0")]
               ]
               [ if model.hydraConfig.logo == ""
@@ -128,7 +130,7 @@ navbarView model =
                     , ul [ class "dropdown-menu" ]
                         [ li
                             []
-                            [ a [ href "#" ]
+                            [ a [ ]
                                 [ text "Builds in progress "
                                 , span
                                     [ class "label label-primary" ]

@@ -3,7 +3,7 @@ module Msg exposing (..)
 import Http
 
 import LiveSearch
-
+import Page
 
 type LoginType
   = Hydra
@@ -16,3 +16,5 @@ type Msg
   | LogoutUserClick
   | PreferencesClick
   | LiveSearchMsg LiveSearch.Msg
+  | NewPage Page.Page
+  | ClickCreateProject

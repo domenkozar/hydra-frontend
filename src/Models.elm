@@ -1,7 +1,12 @@
 module Models exposing (..)
 
+import Page exposing (..)
+
+
+type AlertType = Danger | Info | Warning | Success
+
 type alias Alert =
-  { kind : String
+  { kind : AlertType
   , msg : String
   }
 
@@ -51,6 +56,7 @@ type alias AppModel =
   , user : Maybe User
   , queueStats : QueueStats
   , searchString : String
+  , currentPage : Page
   }
 
 
@@ -58,6 +64,7 @@ initialModel : AppModel
 initialModel =
   { alert = Nothing
   , user = Nothing
+  , currentPage = Page.Home
   , searchString = ""
   , hydraConfig =
     -- TODO: downsize logo, serve it with webpack

@@ -2,21 +2,150 @@ module Views.Project exposing (..)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
+import Html.Events exposing (onClick)
+import Maybe
 import List
 
 import Msg exposing (..)
-import Models exposing (Project)
+import Models exposing (Project, AppModel)
+import Page exposing (Page)
 import LiveSearch
 import Utils exposing (..)
 import Components.Help exposing (..)
 
 
-projectView : Project -> Html Msg
-projectView project =
+projectsView : List Project -> List (Html Msg)
+projectsView projects =
+    let
+      newprojects = List.map renderProject (LiveSearch.search projects)
+    in
+    [ h1
+        [ style [("margin-bottom", "30px")]]
+        [ text "Projects "
+        , button
+            [ type' "submit"
+            , class "btn btn-primary"
+            , onClick (NewPage Page.NewProject) ]
+            [ fontAwesome "plus-circle fa-lg"
+            , text " New" ]
+        ]
+    ] ++ if List.isEmpty newprojects
+         then render404 "Zero projects. Maybe add one?"
+         else newprojects
+
+
+projectView : Project -> List (Html Msg)
+projectView project = [renderProject project]
+
+
+newProjectView : AppModel -> List (Html Msg)
+newProjectView model =
+  [ h1
+      [ style [("margin-bottom", "30px")] ]
+      [ text "Add a new project" ]
+  , Html.form
+      [ class "row col-xs-6"]
+      [ div
+          [ class "form-group" ]
+          [ label
+              [ ]
+              [ text "Identifier" ]
+          , input
+              [ class "form-control"
+              , placeholder "e.g. hydra"
+              , type' "text"
+              ]
+              []
+          ]
+      , div
+          [ class "form-group" ]
+          [ label
+              [ ]
+              [ text "Display Name" ]
+          , input
+              [ class "form-control"
+              , placeholder "e.g. Hydra"
+              , type' "text"
+              ]
+              []
+          ]
+      , div
+          [ class "form-group" ]
+          [ label
+              [ ]
+              [ text "Description" ]
+          , input
+              [ class "form-control"
+              , placeholder "e.g. Builds Nix expressions and provides insight about the process"
+              , type' "text"
+              ]
+              []
+          ]
+      , div
+          [ class "form-group" ]
+          [ label
+              [ ]
+              [ text "Homepage" ]
+          , input
+              [ class "form-control"
+              , placeholder "e.g. https://github.com/NixOS/hydra"
+              , type' "text"
+              ]
+              []
+          ]
+      , div
+          [ class "form-group" ]
+          [ label
+              [ ]
+              [ text "Owner" ]
+          , input
+              [ class "form-control"
+              , type' "text"
+              , value (Maybe.withDefault "" (Maybe.map (\u -> u.id )model.user))
+              ]
+              []
+          ]
+      , div
+          [ class "checkbox" ]
+          [ label
+              []
+              [ input
+                  [ type' "checkbox"
+                  , checked True ]
+                  []
+              , text "Is visible on the project list?"
+              ]
+          ]
+      , div
+          [ class "checkbox" ]
+          [ label
+              []
+              [ input
+                  [ type' "checkbox"
+                  , checked True ]
+                  []
+              , text "Is enabled?"
+              ]
+          ]
+      , button
+          [ type' "submit"
+          , class "btn btn-primary btn-lg"
+          , style [("margin-top", "30px")]
+          , onClick ClickCreateProject ]
+          [ fontAwesome "plus-circle fa-lg"
+          , text " Create project" ]
+      ]
+  ]
+
+
+renderProject : Project -> Html Msg
+renderProject project =
   div
     [ class "panel panel-default" ]
-    [ div
-      [ class "panel-heading clearfix" ]
+    [ a
+      [ class "panel-heading clearfix btn-block"
+      , Page.pointer
+      , onClick (NewPage (Page.Project project.name)) ]
       [ span
         [ class "lead" ]
         [ text (project.name ++ " ") ]
