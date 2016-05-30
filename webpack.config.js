@@ -32,13 +32,7 @@ module.exports = {
 
     noParse: /\.elm$/,
   },
-  plugins: [
-    //new webpack.optimize.UglifyJsPlugin({
-    //  compress: {
-    //      warnings: false
-    //  }
-    //}),
-  ],
+
   devServer: {
     inline: true,
     stats: { colors: true },
