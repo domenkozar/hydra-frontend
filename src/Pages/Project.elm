@@ -5,7 +5,6 @@ import Html.Attributes exposing (..)
 import Html.Events exposing (onClick)
 import Maybe
 import List
-
 import Components.LiveSearch exposing (search)
 import Components.Help exposing (..)
 import Msg exposing (..)
@@ -14,258 +13,245 @@ import Page exposing (Page)
 import Utils exposing (..)
 
 
-
 projectsView : List Project -> List (Html Msg)
 projectsView projects =
     let
-      newprojects = List.map renderProject (search projects)
+        newprojects =
+            List.map renderProject (search projects)
     in
-    [ h1
-        [ style [("margin-bottom", "30px")]]
-        [ text "Projects "
-        , button
-            [ type' "submit"
-            , class "btn btn-primary"
-            , onClick (NewPage Page.NewProject) ]
-            [ fontAwesome "plus-circle fa-lg"
-            , text " New" ]
+        [ h1 [ style [ ( "margin-bottom", "30px" ) ] ]
+            [ text "Projects "
+            , button
+                [ type' "submit"
+                , class "btn btn-primary"
+                , onClick (NewPage Page.NewProject)
+                ]
+                [ fontAwesome "plus-circle fa-lg"
+                , text " New"
+                ]
+            ]
         ]
-    ] ++ if List.isEmpty newprojects
-         then render404 "Zero projects. Maybe add one?"
-         else newprojects
+            ++ if List.isEmpty newprojects then
+                render404 "Zero projects. Maybe add one?"
+               else
+                newprojects
 
 
 projectView : Project -> List (Html Msg)
-projectView project = [renderProject project]
+projectView project =
+    [ renderProject project ]
 
 
 newProjectView : AppModel -> List (Html Msg)
 newProjectView model =
-  [ h1
-      [ style [("margin-bottom", "30px")] ]
-      [ text "Add a new project" ]
-  , Html.form
-      [ class "row col-xs-6"]
-      [ div
-          [ class "form-group" ]
-          [ label
-              [ ]
-              [ text "Identifier" ]
-          , input
-              [ class "form-control"
-              , placeholder "e.g. hydra"
-              , type' "text"
-              ]
-              []
-          ]
-      , div
-          [ class "form-group" ]
-          [ label
-              [ ]
-              [ text "Display Name" ]
-          , input
-              [ class "form-control"
-              , placeholder "e.g. Hydra"
-              , type' "text"
-              ]
-              []
-          ]
-      , div
-          [ class "form-group" ]
-          [ label
-              [ ]
-              [ text "Description" ]
-          , input
-              [ class "form-control"
-              , placeholder "e.g. Builds Nix expressions and provides insight about the process"
-              , type' "text"
-              ]
-              []
-          ]
-      , div
-          [ class "form-group" ]
-          [ label
-              [ ]
-              [ text "Homepage" ]
-          , input
-              [ class "form-control"
-              , placeholder "e.g. https://github.com/NixOS/hydra"
-              , type' "text"
-              ]
-              []
-          ]
-      , div
-          [ class "form-group" ]
-          [ label
-              [ ]
-              [ text "Owner" ]
-          , input
-              [ class "form-control"
-              , type' "text"
-              , value (Maybe.withDefault "" (Maybe.map (\u -> u.id )model.user))
-              ]
-              []
-          ]
-      , div
-          [ class "checkbox" ]
-          [ label
-              []
-              [ input
-                  [ type' "checkbox"
-                  , checked True ]
-                  []
-              , text "Is visible on the project list?"
-              ]
-          ]
-      , div
-          [ class "checkbox" ]
-          [ label
-              []
-              [ input
-                  [ type' "checkbox"
-                  , checked True ]
-                  []
-              , text "Is enabled?"
-              ]
-          ]
-      , button
-          [ type' "submit"
-          , class "btn btn-primary btn-lg"
-          , style [("margin-top", "30px")]
-          , onClick ClickCreateProject ]
-          [ fontAwesome "plus-circle fa-lg"
-          , text " Create project" ]
-      ]
-  ]
+    [ h1 [ style [ ( "margin-bottom", "30px" ) ] ]
+        [ text "Add a new project" ]
+    , Html.form [ class "row col-xs-6" ]
+        [ div [ class "form-group" ]
+            [ label []
+                [ text "Identifier" ]
+            , input
+                [ class "form-control"
+                , placeholder "e.g. hydra"
+                , type' "text"
+                ]
+                []
+            ]
+        , div [ class "form-group" ]
+            [ label []
+                [ text "Display Name" ]
+            , input
+                [ class "form-control"
+                , placeholder "e.g. Hydra"
+                , type' "text"
+                ]
+                []
+            ]
+        , div [ class "form-group" ]
+            [ label []
+                [ text "Description" ]
+            , input
+                [ class "form-control"
+                , placeholder "e.g. Builds Nix expressions and provides insight about the process"
+                , type' "text"
+                ]
+                []
+            ]
+        , div [ class "form-group" ]
+            [ label []
+                [ text "Homepage" ]
+            , input
+                [ class "form-control"
+                , placeholder "e.g. https://github.com/NixOS/hydra"
+                , type' "text"
+                ]
+                []
+            ]
+        , div [ class "form-group" ]
+            [ label []
+                [ text "Owner" ]
+            , input
+                [ class "form-control"
+                , type' "text"
+                , value (Maybe.withDefault "" (Maybe.map (\u -> u.id) model.user))
+                ]
+                []
+            ]
+        , div [ class "checkbox" ]
+            [ label []
+                [ input
+                    [ type' "checkbox"
+                    , checked True
+                    ]
+                    []
+                , text "Is visible on the project list?"
+                ]
+            ]
+        , div [ class "checkbox" ]
+            [ label []
+                [ input
+                    [ type' "checkbox"
+                    , checked True
+                    ]
+                    []
+                , text "Is enabled?"
+                ]
+            ]
+        , button
+            [ type' "submit"
+            , class "btn btn-primary btn-lg"
+            , style [ ( "margin-top", "30px" ) ]
+            , onClick ClickCreateProject
+            ]
+            [ fontAwesome "plus-circle fa-lg"
+            , text " Create project"
+            ]
+        ]
+    ]
 
 
 renderProject : Project -> Html Msg
 renderProject project =
-  div
-    [ class "panel panel-default" ]
-    [ a
-      [ class "panel-heading clearfix btn-block"
-      , Page.pointer
-      , onClick (NewPage (Page.Project project.name)) ]
-      [ span
-        [ class "lead" ]
-        [ text (project.name ++ " ") ]
-      , small
-        [ class "hidden-xs"]
-        [ text ("(" ++ project.description ++ ")") ]
-      , div
-        [ attribute "aria-label" "..."
-        , class "btn-group pull-right"
-        , attribute "role" "group" ]
-        [ div [ class "btn-group", attribute "role" "group" ]
-          [ button
-            [ attribute "aria-expanded" "false"
-            , attribute "aria-haspopup" "true"
-            , class "btn btn-primary dropdown-toggle"
-            , attribute "data-toggle" "dropdown"
-            , type' "button" ]
-            [ text "Actions          "
-            , span
-              [ class "caret" ]
-              []
+    div [ class "panel panel-default" ]
+        [ a
+            [ class "panel-heading clearfix btn-block"
+            , Page.pointer
+            , onClick (NewPage (Page.Project project.name))
             ]
-          , ul
-            [ class "dropdown-menu" ]
-            [ li
-              []
-              [ a
-                [ href "#" ]
-                [ fontAwesomeAttrs "trash fa-lg" [ style [("color", "red")]]
-                , text " Delete the project"
+            [ span [ class "lead" ]
+                [ text (project.name ++ " ") ]
+            , small [ class "hidden-xs" ]
+                [ text ("(" ++ project.description ++ ")") ]
+            , div
+                [ attribute "aria-label" "..."
+                , class "btn-group pull-right"
+                , attribute "role" "group"
                 ]
-              ]
-            , li
-              []
-              [ a
-                [ href "#" ]
-                [ fontAwesomeAttrs "plus-circle fa-lg" [ style [("color", "green")]]
-                , text " Add a jobset"
+                [ div [ class "btn-group", attribute "role" "group" ]
+                    [ button
+                        [ attribute "aria-expanded" "false"
+                        , attribute "aria-haspopup" "true"
+                        , class "btn btn-primary dropdown-toggle"
+                        , attribute "data-toggle" "dropdown"
+                        , type' "button"
+                        ]
+                        [ text "Actions          "
+                        , span [ class "caret" ]
+                            []
+                        ]
+                    , ul [ class "dropdown-menu" ]
+                        [ li []
+                            [ a [ href "#" ]
+                                [ fontAwesomeAttrs "trash fa-lg" [ style [ ( "color", "red" ) ] ]
+                                , text " Delete the project"
+                                ]
+                            ]
+                        , li []
+                            [ a [ href "#" ]
+                                [ fontAwesomeAttrs "plus-circle fa-lg" [ style [ ( "color", "green" ) ] ]
+                                , text " Add a jobset"
+                                ]
+                            ]
+                        ]
+                    ]
+                , button
+                    [ class "btn btn-default"
+                    , type' "button"
+                    ]
+                    [ text "Configuration "
+                    , fontAwesome "cog fa-lg"
+                    ]
                 ]
-              ]
             ]
-          ]
-        , button
-          [ class "btn btn-default"
-          , type' "button" ]
-          [ text "Configuration "
-          , fontAwesome "cog fa-lg"
-          ]
+        , if List.isEmpty project.jobsets then
+            p [ class "text-center", style [ ( "margin", "20px" ) ] ] [ text "No Jobsets configured yet." ]
+          else
+            table [ class "table table-hover" ]
+                ([ thead []
+                    [ tr []
+                        [ th [ style [ ( "width", "15%" ), ( "min-width", "85px" ) ] ]
+                            [ strong []
+                                [ text "Jobset"
+                                , popoverJobsetHelp
+                                ]
+                            ]
+                        , th [ style [ ( "width", "40%" ) ] ]
+                            [ strong []
+                                [ text "Description" ]
+                            ]
+                        , th [ style [ ( "width", "15%" ) ] ]
+                            [ strong []
+                                [ text "Build status" ]
+                            ]
+                        , th [ style [ ( "width", "30%" ) ] ]
+                            [ strong []
+                                [ text "Last evaluation" ]
+                            ]
+                        ]
+                    ]
+                 ]
+                    ++ ([ tbody []
+                            (List.map
+                                (\jobset ->
+                                    tr []
+                                        [ td []
+                                            [ a
+                                                [ onClick (NewPage (Page.Jobset project.name jobset.id))
+                                                , Page.pointer
+                                                ]
+                                                [ text jobset.name ]
+                                            ]
+                                        , td []
+                                            [ text jobset.description ]
+                                        , td []
+                                            [ optionalTag (jobset.succeeded > 0)
+                                                (span [ class "label label-success" ]
+                                                    [ text (toString jobset.succeeded) ]
+                                                )
+                                            , optionalTag (jobset.failed > 0)
+                                                (span []
+                                                    [ text " " ]
+                                                )
+                                            , optionalTag (jobset.failed > 0)
+                                                (span [ class "label label-danger" ]
+                                                    [ text (toString jobset.failed) ]
+                                                )
+                                            , optionalTag (jobset.queued > 0)
+                                                (span []
+                                                    [ text " " ]
+                                                )
+                                            , optionalTag (jobset.queued > 0)
+                                                (span [ class "label label-default" ]
+                                                    [ text (toString jobset.queued) ]
+                                                )
+                                            ]
+                                        , td []
+                                            [ text jobset.lastEvaluation ]
+                                        ]
+                                )
+                                (search project.jobsets)
+                            )
+                        ]
+                       )
+                )
         ]
-      ]
-    , if List.isEmpty project.jobsets
-      then p [ class "text-center", style [("margin", "20px")]] [text "No Jobsets configured yet."]
-      else table
-        [ class "table table-hover" ]
-        ([ thead
-              []
-              [ tr
-                  []
-                  [ th
-                    [ style [("width", "15%"), ("min-width", "85px")]]
-                    [ strong []
-                      [ text "Jobset"
-                      , popoverJobsetHelp
-                      ]
-                    ]
-                  , th
-                    [ style [("width", "40%")]]
-                    [ strong []
-                      [ text "Description" ]
-                    ]
-                  , th
-                    [ style [("width", "15%")]]
-                    [ strong []
-                      [ text "Build status" ]
-                    ]
-                  , th
-                    [ style [("width", "30%")]]
-                    [ strong []
-                      [ text "Last evaluation" ]
-                    ]
-
-                  ]
-              ]
-        ] ++ ([tbody [] (List.map (\jobset ->
-          tr
-            []
-            [ td []
-              [ a
-                  [ onClick (NewPage (Page.Jobset project.name jobset.id))
-                  , Page.pointer ]
-                  [ text jobset.name ]
-              ]
-            , td []
-              [ text jobset.description ]
-            , td
-                []
-                [ optionalTag (jobset.succeeded > 0)
-                   (span
-                    [ class "label label-success" ]
-                    [ text (toString jobset.succeeded) ])
-                , optionalTag (jobset.failed > 0)
-                    (span
-                    []
-                    [ text " " ])
-                , optionalTag (jobset.failed > 0)
-                    (span
-                    [ class "label label-danger" ]
-                    [ text (toString jobset.failed) ])
-                , optionalTag (jobset.queued > 0)
-                    (span
-                    []
-                    [ text " " ])
-                , optionalTag (jobset.queued > 0)
-                    (span
-                    [ class "label label-default" ]
-                    [ text (toString jobset.queued) ])
-              ]
-            , td []
-              [ text jobset.lastEvaluation ]
-            ]) (search project.jobsets))])
-        )
-    ]

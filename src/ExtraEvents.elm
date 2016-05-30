@@ -7,11 +7,14 @@ import Html.Events exposing (..)
 
 onEscape : msg -> Attribute msg
 onEscape msg =
-  on "keydown" (Json.map (always msg) (Json.customDecoder keyCode isEscape))
+    on "keydown" (Json.map (always msg) (Json.customDecoder keyCode isEscape))
 
 
 isEscape : Int -> Result String ()
 isEscape code =
-  case code of
-    27 -> Ok ()
-    _ -> Err "not the right key code"
+    case code of
+        27 ->
+            Ok ()
+
+        _ ->
+            Err "not the right key code"
