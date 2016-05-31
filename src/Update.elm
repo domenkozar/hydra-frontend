@@ -12,10 +12,10 @@ update : Msg -> AppModel -> ( AppModel, Cmd Msg )
 update msg model =
     case msg of
         FetchSucceed init ->
-            ( model, popoverInit () )
+            ( model, Cmd.none )
 
         FetchFail msg ->
-            ( model, popoverInit () )
+            ( model, Cmd.none )
 
         LoginUserClick loginType ->
             let
