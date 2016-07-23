@@ -2,7 +2,9 @@ module Utils exposing (..)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
+import Html.Events exposing (..)
 import Msg exposing (..)
+import Page exposing (Page)
 
 
 fontAwesome : String -> Html Msg
@@ -15,6 +17,7 @@ fontAwesomeAttrs className attrs =
     i
         ([ class ("fa fa-" ++ className)
          , attribute "aria-hideen" "true"
+         , style [("margin-right", "6px")]
          ]
             ++ attrs
         )

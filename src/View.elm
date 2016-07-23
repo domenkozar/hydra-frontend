@@ -6,7 +6,8 @@ import Maybe
 import List
 import Components.Breadcrumbs exposing (breadCrumbs)
 import Components.Navbar exposing (navbarView)
-import Pages.Project exposing (projectView, projectsView, newProjectView)
+import Pages.Project exposing (..)
+import Pages.Jobset exposing (..)
 import Msg exposing (Msg)
 import Models exposing (..)
 import Page exposing (..)
@@ -20,7 +21,8 @@ view model =
         , div [ class "container" ]
             [ (alertView model.alert)
             , (breadCrumbs model)
-            , div [ class "row" ]
+            , div [ class "row"
+                  , style [("min-height", "500px")] ]
                 (pageToView model)
             , footer
                 [ class "text-center"
@@ -60,8 +62,18 @@ pageToView model =
         NewProject ->
             newProjectView model
 
-        Jobset project jobset ->
-            []
+        Jobset projectName jobsetName ->
+            case List.head (List.filter (\p -> p.name == projectName) model.projects) of
+                Just project ->
+                    case List.head (List.filter (\j -> j.name == jobsetName) project.jobsets) of
+                        Just jobset ->
+                            jobsetView jobset
+
+                        Nothing ->
+                            render404 ("Jobset " ++ jobsetName ++ " does not exist.")
+
+                Nothing ->
+                    render404 ("Project " ++ projectName ++ " does not exist.")
 
 
 alertView : Maybe Alert -> Html Msg
