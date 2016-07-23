@@ -12,9 +12,8 @@ import Utils exposing (fontAwesomeAttrs)
 -}
 popoverHelp : String -> Html Msg
 popoverHelp msg =
-    span []
-        [ text " "
-        , fontAwesomeAttrs "question-circle fa-lg"
+    span [ style [("margin", "0 6px")] ]
+        [ fontAwesomeAttrs "question-circle fa-lg"
             [ style [ ( "color", "#0088CC" ) ]
             , attribute "data-toggle" "popover"
             , attribute "data-placement" "auto top"
