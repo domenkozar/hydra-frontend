@@ -1,5 +1,5 @@
 language: nix
 sudo: false
 install:
-  - nix-shell --run "npm i"
+  - nix-shell --run "npm i" -j 8
   - nix-shell --run "elm package install -y"
