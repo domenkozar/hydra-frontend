@@ -147,7 +147,6 @@ renderProject project =
                         , attribute "aria-haspopup" "true"
                         , class "btn btn-primary dropdown-toggle"
                         , attribute "data-toggle" "dropdown"
-                        , onClick ClickCreateProject
                         , type' "button"
                         ]
                         [ span [ class "caret" ] []
