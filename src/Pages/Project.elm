@@ -19,18 +19,7 @@ projectsView projects =
         newprojects =
             List.map renderProject (search projects)
     in
-        [ h1 [ style [ ( "margin-bottom", "30px" ) ] ]
-            [ text "Projects "
-            , button
-                [ type' "submit"
-                , class "btn btn-primary"
-                , onClick (NewPage Page.NewProject)
-                ]
-                [ fontAwesome "plus-circle fa-lg"
-                , text " New"
-                ]
-            ]
-        ]
+        renderHeader "Projects" Nothing (Just Page.NewProject)
             ++ if List.isEmpty newprojects then
                 render404 "Zero projects. Maybe add one?"
                else

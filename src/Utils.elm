@@ -31,6 +31,32 @@ optionalTag doInclude html =
 
 render404 : String -> List (Html Msg)
 render404 reason =
-    [ p [ class "text-center lead" ]
+    [ p [ class "text-center lead well" ]
         [ text reason ]
     ]
+
+
+renderHeader : String -> Maybe String -> Maybe Page.Page -> List (Html Msg)
+renderHeader name subname page =
+    let
+        subnameHtml = case subname of
+          Nothing -> []
+          Just s -> [ small [ style [ ( "margin-left", "10px" ) ]]
+                            [ text s ]]
+        pageHtml =  case page of
+          Nothing -> []
+          Just p -> [ button
+              [ type' "submit"
+              , class "btn btn-primary"
+              , onClick (NewPage p)
+              , style [ ( "margin-left", "10px" ) ]
+              ]
+              [ fontAwesome "plus-circle fa-lg"
+              , text "New"
+              ]
+          ]
+    in
+        [ h1
+            [ style [ ( "margin-bottom", "30px" ) ] ]
+            ([ text name ] ++ subnameHtml ++ pageHtml)
+        ]
