@@ -136,17 +136,19 @@ renderProject project =
                 , class "btn-group pull-right"
                 , attribute "role" "group"
                 ]
-                [ div [ class "btn-group", attribute "role" "group" ]
+                [ div [ class "btn-group"
+                , attribute "role" "group"
+                 ]
                     [ button
                         [ attribute "aria-expanded" "false"
                         , attribute "aria-haspopup" "true"
                         , class "btn btn-primary dropdown-toggle"
                         , attribute "data-toggle" "dropdown"
+                        , onClick ClickCreateProject
                         , type' "button"
                         ]
-                        [ text "Actions          "
-                        , span [ class "caret" ]
-                            []
+                        [ span [ class "caret" ] []
+                        , text " Actions"
                         ]
                     , ul [ class "dropdown-menu" ]
                         [ li []
@@ -167,8 +169,8 @@ renderProject project =
                     [ class "btn btn-default"
                     , type' "button"
                     ]
-                    [ text "Configuration "
-                    , fontAwesome "cog fa-lg"
+                    [ fontAwesome "cog fa-lg"
+                    , text "Configuration"
                     ]
                 ]
             ]
@@ -181,7 +183,7 @@ renderProject project =
                         [ th [ style [ ( "width", "15%" ), ( "min-width", "85px" ) ] ]
                             [ strong []
                                 [ text "Jobset"
-                                , popoverJobsetHelp
+                                , jobsetHelp
                                 ]
                             ]
                         , th [ style [ ( "width", "40%" ) ] ]
@@ -214,7 +216,8 @@ renderProject project =
                                             [ text jobset.description ]
                                         , td []
                                             [ optionalTag (jobset.succeeded > 0)
-                                                (span [ class "label label-success" ]
+                                                (span [ class "label label-success"
+                                                      , title "Builds succeeded" ]
                                                     [ text (toString jobset.succeeded) ]
                                                 )
                                             , optionalTag (jobset.failed > 0)
@@ -222,7 +225,8 @@ renderProject project =
                                                     [ text " " ]
                                                 )
                                             , optionalTag (jobset.failed > 0)
-                                                (span [ class "label label-danger" ]
+                                                (span [ class "label label-danger"
+                                                      , title "Builds failed" ]
                                                     [ text (toString jobset.failed) ]
                                                 )
                                             , optionalTag (jobset.queued > 0)
@@ -230,7 +234,8 @@ renderProject project =
                                                     [ text " " ]
                                                 )
                                             , optionalTag (jobset.queued > 0)
-                                                (span [ class "label label-default" ]
+                                                (span [ class "label label-default"
+                                                      , title "Builds in queue" ]
                                                     [ text (toString jobset.queued) ]
                                                 )
                                             ]
