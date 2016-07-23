@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/domenkozar/hydra-frontend.svg?branch=master)](https://travis-ci.org/domenkozar/hydra-frontend)
+
 Demo (no backend involved yet): http://hydra-frontend.domenkozar.com/
 
 See https://github.com/NixOS/hydra/issues/314 for reasoning why this
