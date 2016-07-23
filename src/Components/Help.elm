@@ -21,10 +21,27 @@ popoverHelp msg =
             , attribute "data-content" msg
             , attribute "title" "Help"
             ]
-        , text " "
         ]
 
+projectHelp : Html Msg
+projectHelp =
+    popoverHelp ""
 
-popoverJobsetHelp : Html Msg
-popoverJobsetHelp =
+jobsetHelp : Html Msg
+jobsetHelp =
     popoverHelp "Jobsets evaluate a Nix expression and provide an overview of successful/failed builds."
+
+
+evaluationHelp : Html Msg
+evaluationHelp =
+    popoverHelp ""
+
+
+buildHelp : Html Msg
+buildHelp =
+    popoverHelp ""
+
+
+buildStepHelp : Html Msg
+buildStepHelp =
+    popoverHelp ""
