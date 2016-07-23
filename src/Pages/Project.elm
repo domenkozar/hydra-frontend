@@ -122,15 +122,18 @@ newProjectView model =
 renderProject : Project -> Html Msg
 renderProject project =
     div [ class "panel panel-default" ]
-        [ a
-            [ class "panel-heading clearfix btn-block"
-            , Page.pointer
-            , onClick (NewPage (Page.Project project.name))
-            ]
-            [ span [ class "lead" ]
-                [ text (project.name ++ " ") ]
-            , small [ class "hidden-xs" ]
-                [ text ("(" ++ project.description ++ ")") ]
+        [ div
+            [ class "panel-heading clearfix btn-block" ]
+            [ span [
+                Page.pointer
+                , onClick (NewPage (Page.Project project.name))
+                ]
+               [
+               span [ class "lead" ]
+                  [ text (project.name ++ " ") ]
+              , small [ class "hidden-xs" ]
+                  [ text ("(" ++ project.description ++ ")") ]
+                  ]
             , div
                 [ attribute "aria-label" "..."
                 , class "btn-group pull-right"
@@ -167,6 +170,7 @@ renderProject project =
                     ]
                 , button
                     [ class "btn btn-default"
+                    , onClick ClickCreateProject -- TODO: wrong msg
                     , type' "button"
                     ]
                     [ fontAwesome "cog fa-lg"
