@@ -1,4 +1,4 @@
-with import (fetchTarball https://github.com/NixOS/nixpkgs/archive/6b9c67333fe62c38f1231dd5339b776c7c3d7172.tar.gz) {};
+with import (fetchTarball https://github.com/NixOS/nixpkgs/archive/e725c927d4a09ee116fe18f2f0718364678a321f.tar.gz) {};
 
 stdenv.mkDerivation {
  name = "hydra-frontend";
