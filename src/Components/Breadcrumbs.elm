@@ -2,11 +2,11 @@ module Components.Breadcrumbs exposing (..)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
-import Html.Events exposing (onClick)
 import List
 import Msg exposing (..)
 import Page exposing (..)
 import Models exposing (..)
+import Urls exposing (..)
 
 
 type alias Breadcrumb =
@@ -23,9 +23,7 @@ renderBreadcrumbs breadcrumbs =
                 Just page ->
                     li []
                         [ a
-                            [ pointer
-                            , onClick (NewPage page)
-                            ]
+                            (onClickPage page)
                             [ text breadcrumb.name ]
                         ]
 

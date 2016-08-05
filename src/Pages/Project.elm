@@ -10,6 +10,7 @@ import Components.Help exposing (..)
 import Msg exposing (..)
 import Models exposing (Project, AppModel)
 import Page exposing (Page)
+import Urls exposing (onClickPage)
 import Utils exposing (..)
 
 
@@ -124,10 +125,7 @@ renderProject project =
     div [ class "panel panel-default" ]
         [ div
             [ class "panel-heading clearfix btn-block" ]
-            [ span [
-                Page.pointer
-                , onClick (NewPage (Page.Project project.name))
-                ]
+            [ a (onClickPage (Page.Project project.name))
                [
                span [ class "lead" ]
                   [ text (project.name ++ " ") ]
@@ -210,9 +208,7 @@ renderProject project =
                                     tr []
                                         [ td []
                                             [ a
-                                                [ onClick (NewPage (Page.Jobset project.name jobset.id))
-                                                , Page.pointer
-                                                ]
+                                                (onClickPage (Page.Jobset project.name jobset.id))
                                                 [ text jobset.name ]
                                             ]
                                         , td []

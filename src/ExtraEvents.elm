@@ -18,3 +18,8 @@ isEscape code =
 
         _ ->
             Err "not the right key code"
+
+
+onPreventDefaultClick : msg -> Attribute msg
+onPreventDefaultClick message =
+  onWithOptions "click" { defaultOptions | preventDefault = True } (Json.succeed message)
