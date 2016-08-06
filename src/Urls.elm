@@ -2,9 +2,13 @@ module Urls exposing (..)
 
 import Debug
 import Navigation
+import Html exposing (Attribute)
+import Html.Attributes exposing (..)
 import Page exposing (..)
 import String
 import UrlParser exposing (Parser, (</>), format, int, oneOf, s, string)
+import ExtraEvents exposing (onPreventDefaultClick)
+import Msg exposing (..)
 
 
 urlParser : Navigation.Location -> Result String Page
@@ -22,6 +26,14 @@ pageParser =
         , format NewProject (s "create-project")
         , format Jobset (s "jobset" </> string </> string)
         ]
+
+
+onClickPage : Page -> List (Attribute Msg)
+onClickPage page =
+  [ Page.pointer
+  , href (pageToURL page)
+  , onPreventDefaultClick (NewPage page)
+  ]
 
 
 pageToURL : Page -> String

@@ -9,6 +9,7 @@ import Models exposing (AppModel)
 import Components.LiveSearch as LiveSearch
 import Page exposing (Page)
 import Utils exposing (..)
+import Urls exposing (..)
 
 
 navbarView : AppModel -> Html Msg
@@ -74,11 +75,9 @@ navbarView model =
                             []
                         ]
                     , a
-                        [ class "navbar-brand"
-                        , onClick (NewPage Page.Home)
-                        , Page.pointer
+                        ([ class "navbar-brand"
                         , style [ ( "padding", "0" ) ]
-                        ]
+                        ] ++ (onClickPage Page.Home))
                         [ if model.hydraConfig.logo == "" then
                             text "Hydra"
                           else

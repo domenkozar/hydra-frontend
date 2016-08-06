@@ -2,9 +2,9 @@ module Utils exposing (..)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
-import Html.Events exposing (..)
 import Msg exposing (..)
 import Page exposing (Page)
+import Urls exposing (onClickPage)
 
 
 fontAwesome : String -> Html Msg
@@ -49,11 +49,10 @@ renderHeader name subname page =
         pageHtml =  case page of
           Nothing -> []
           Just p -> [ button
-              [ type' "submit"
+              ([ type' "submit"
               , class "btn btn-primary"
-              , onClick (NewPage p)
               , style [ ( "margin-left", "10px" ) ]
-              ]
+              ] ++ (onClickPage p))
               [ fontAwesome "plus-circle fa-lg"
               , text "New"
               ]
