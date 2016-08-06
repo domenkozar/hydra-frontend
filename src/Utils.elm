@@ -32,6 +32,33 @@ optionalTag doInclude html =
         text ""
 
 
+statusLabels : Int -> Int -> Int -> List (Html Msg)
+statusLabels succeeded failed queued =
+  [ optionalTag (succeeded > 0)
+      (span [ class "label label-success"
+            , title "Jobs succeeded" ]
+          [ text (toString succeeded) ]
+      )
+  , optionalTag (failed > 0)
+      (span []
+          [ text " " ]
+      )
+  , optionalTag (failed > 0)
+      (span [ class "label label-danger"
+            , title "Jobs failed" ]
+          [ text (toString failed) ]
+      )
+  , optionalTag (queued > 0)
+      (span []
+          [ text " " ]
+      )
+  , optionalTag (queued > 0)
+      (span [ class "label label-default"
+            , title "Jobs in queue" ]
+          [ text (toString queued) ]
+      )
+  ]
+
 render404 : String -> List (Html Msg)
 render404 reason =
     [ p [ class "text-center lead well" ]

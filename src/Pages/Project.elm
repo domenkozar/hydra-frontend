@@ -214,30 +214,7 @@ renderProject project =
                                         , td []
                                             [ text jobset.description ]
                                         , td []
-                                            [ optionalTag (jobset.succeeded > 0)
-                                                (span [ class "label label-success"
-                                                      , title "Builds succeeded" ]
-                                                    [ text (toString jobset.succeeded) ]
-                                                )
-                                            , optionalTag (jobset.failed > 0)
-                                                (span []
-                                                    [ text " " ]
-                                                )
-                                            , optionalTag (jobset.failed > 0)
-                                                (span [ class "label label-danger"
-                                                      , title "Builds failed" ]
-                                                    [ text (toString jobset.failed) ]
-                                                )
-                                            , optionalTag (jobset.queued > 0)
-                                                (span []
-                                                    [ text " " ]
-                                                )
-                                            , optionalTag (jobset.queued > 0)
-                                                (span [ class "label label-default"
-                                                      , title "Builds in queue" ]
-                                                    [ text (toString jobset.queued) ]
-                                                )
-                                            ]
+                                             (statusLabels jobset.succeeded jobset.failed jobset.queued)
                                         , td []
                                             [ text jobset.lastEvaluation ]
                                         ]
