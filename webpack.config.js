@@ -35,7 +35,7 @@ module.exports = {
 
   devServer: {
     inline: true,
-    stats: { colors: true },
+    stats: 'errors-only',
     historyApiFallback: true
   },
 };

@@ -1,16 +1,23 @@
 module Components.LiveSearch exposing (update, view, search, Msg)
 
 import Html exposing (..)
-import Html.Attributes exposing (..)
-import Html.Events exposing (onInput)
+import Html.Events exposing (..)
+import Json.Decode as Json
 import String
+import Material
+import Material.Textfield as Textfield
+import Material.Color as Color
+import Material.Button as Button
+import Material.Icon as Icon
+import Material.Options as Options
+
 import Models exposing (..)
-import ExtraEvents exposing (onEscape)
 
 
 type Msg
     = SearchInput String
     | SearchEscape
+    | Mdl (Material.Msg Msg)
 
 
 compareCaseInsensitve : String -> String -> Bool
@@ -86,18 +93,45 @@ update msg model =
               }
             , Cmd.none
             )
+        Mdl msg' ->
+              Material.update msg' model
 
 
 view : AppModel -> Html Msg
 view model =
-    div [ class "form-group" ]
-        [ input
-            [ type' "text"
-            , class "form-control"
-            , placeholder "Search"
-            , onInput SearchInput
-            , onEscape SearchEscape
-            , value model.searchString
-            ]
-            []
+  span
+    []
+    [ Textfield.render Mdl [0] model.mdl
+        [ Textfield.label "Search"
+        , Textfield.floatingLabel
+        , Textfield.text'
+        , Textfield.onInput SearchInput
+        , onEscape SearchEscape
+        , Textfield.value model.searchString
+        , Textfield.style [ Options.css "border-radius" "0.5em"
+                          , Color.background Color.primaryDark ]
         ]
+    , Icon.view
+        "search"
+        [ Icon.onClick (SearchInput model.searchString) -- TODO: trigger a proper search page
+        , Options.css "position" "relative"
+        , Options.css "top" "8px"
+        , Options.css "right" "28px"
+        , Options.css "z-index" "100"
+        , Options.css "cursor" "pointer"
+        ]
+    ]
+
+onEscape : msg -> Textfield.Property msg
+onEscape msg =
+    Textfield.on "keydown" (Json.map (always msg) (Json.customDecoder keyCode isEscape))
+
+
+isEscape : Int -> Result String ()
+isEscape code =
+    case code of
+        27 ->
+            Ok ()
+
+        _ ->
+            Err "not the right key code"

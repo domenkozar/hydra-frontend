@@ -3,187 +3,83 @@ module Components.Navbar exposing (..)
 import Html exposing (..)
 import Html.App as App
 import Html.Attributes exposing (..)
-import Html.Events exposing (onClick)
+import Maybe
+import Material.Layout as Layout
+import Material.Icon as Icon
+import Material.Menu as Menu
+import Material.Options as Options
+import Material.Color as Color
+import Material.Textfield as Textfield
+
 import Msg exposing (..)
 import Models exposing (AppModel)
+import Components.Breadcrumbs exposing (breadCrumbs)
 import Components.LiveSearch as LiveSearch
-import Page exposing (Page)
-import Utils exposing (..)
 import Urls exposing (..)
+import Utils exposing (..)
 
 
-navbarView : AppModel -> Html Msg
-navbarView model =
+tabs : AppModel -> List (Html Msg)
+tabs model =
+  [ span [] [ whiteBadge [] [ text (toString model.queueStats.numBuilding)], text " in progress"]
+  , span [] [ whiteBadge [] [ text (toString model.queueStats.numWaiting)], text " in queue" ]
+  , span [] [ whiteBadge [] [ text (toString model.queueStats.numMachines) ], text " machines" ]
+  , text "evaluations"
+  , text "builds"
+  , text "steps"
+  ]
+
+view : AppModel -> List (Html Msg)
+view model =
     let
-        dropdownText =
+        menuItems =
             case model.user of
                 Nothing ->
-                    [ text "Sign in" ]
-
-                Just user ->
-                    [ fontAwesome "user fa-lg"
-                    , text (" " ++ user.name)
-                    ]
-
-        dropdownButtons =
-            case model.user of
-                Nothing ->
-                    [ li []
-                        [ a [ onClick (LoginUserClick Google) ]
-                            [ text "using Google" ]
-                        ]
-                    , li []
-                        [ a [ onClick (LoginUserClick Hydra) ]
-                            [ text "using Hydra" ]
-                        ]
+                    [ Menu.item
+                        [ Menu.onSelect <| LoginUserClick Google ]
+                        [ menuIcon "input"
+                        , text "Sign in with Google" ]
+                    , Menu.item
+                        [ Menu.onSelect <| LoginUserClick Hydra ]
+                        [ menuIcon "input"
+                        , text "Sign in with a password" ]
                     ]
 
                 Just user ->
-                    [ li []
-                        [ a [ onClick PreferencesClick ]
-                            [ fontAwesome "edit fa-lg"
-                            , text " Preferences"
-                            ]
-                        ]
-                    , li []
-                        [ a [ onClick LogoutUserClick ]
-                            [ fontAwesomeAttrs "power-off fa-lg" [ style [ ( "color", "red" ) ] ]
-                            , text " Sign out"
-                            ]
-                        ]
+                    [ Menu.item
+                        [ Menu.onSelect <| PreferencesClick ]
+                        [ menuIcon "settings"
+                        , text "Preferences" ]
+                    , Menu.item
+                        [ Menu.onSelect <| LogoutUserClick ]
+                        [ Icon.view "power_settings_new" [ Options.css "width" "40px"
+                                                         , Options.css "color" "red" ]
+                        , text "Sign out" ]
                     ]
-    in
-        nav
-            [ class "navbar navbar-fixed-top navbar-default"
-            , attribute "role" "navigation"
-            ]
-            [ div [ class "container" ]
-                [ div [ class "navbar-header" ]
-                    [ button
-                        [ class "navbar-toggle"
-                        , attribute "data-target" ".navbar-ex1-collapse"
-                        , attribute "data-toggle" "collapse"
-                        , type' "button"
-                        ]
-                        [ span [ class "sr-only" ]
-                            [ text "Toggle navigation" ]
-                        , span [ class "icon-bar" ]
-                            []
-                        , span [ class "icon-bar" ]
-                            []
-                        , span [ class "icon-bar" ]
-                            []
-                        ]
-                    , a
-                        ([ class "navbar-brand"
-                        , style [ ( "padding", "0" ) ]
-                        ] ++ (onClickPage Page.Home))
-                        [ if model.hydraConfig.logo == "" then
-                            text "Hydra"
-                          else
-                            img
-                                [ src model.hydraConfig.logo
-                                , alt "Hydra Logo"
-                                , class "logo"
-                                , style [ ( "height", "37px" ), ( "margin", "5px" ) ]
-                                ]
-                                []
-                        ]
-                    ]
-                , div [ class "collapse navbar-collapse navbar-ex1-collapse" ]
-                    [ ul [ class "nav navbar-nav" ]
-                        [ li [ class "dropdown" ]
-                            [ a
-                                [ attribute "aria-expanded" "false"
-                                , attribute "aria-haspopup" "true"
-                                , class "dropdown-toggle"
-                                , attribute "data-toggle" "dropdown"
-                                , href "#"
-                                , attribute "role" "button"
-                                ]
-                                [ text "Building "
-                                , span [ class "label label-primary" ]
-                                    [ text (toString model.queueStats.numBuilding) ]
-                                , text " out of "
-                                , span [ class "label label-default" ]
-                                    [ text (toString model.queueStats.numWaiting) ]
-                                , span []
-                                    [ text " " ]
-                                , span [ class "caret" ]
-                                    []
-                                ]
-                            , ul [ class "dropdown-menu" ]
-                                [ li []
-                                    [ a []
-                                        [ text "Builds in progress "
-                                        , span [ class "label label-primary" ]
-                                            [ text (toString model.queueStats.numBuilding) ]
-                                        ]
-                                    ]
-                                , li []
-                                    [ a [ href "#" ]
-                                        [ text "Queue summary "
-                                        , span [ class "label label-default" ]
-                                            [ text (toString model.queueStats.numWaiting) ]
-                                        ]
-                                    ]
-                                , li []
-                                    [ a [ href "#" ]
-                                        [ text "Machines summary "
-                                        , span [ class "label label-info" ]
-                                            [ text (toString model.queueStats.numMachines) ]
-                                        ]
-                                    ]
-                                , li
-                                    [ attribute "role" "separator"
-                                    , class "divider"
-                                    ]
-                                    []
-                                , li []
-                                    [ a [ href "#" ]
-                                        [ text "Latest evaluations" ]
-                                    ]
-                                , li []
-                                    [ a [ href "#" ]
-                                        [ text "Latest builds" ]
-                                    ]
-                                , li []
-                                    [ a [ href "#" ]
-                                        [ text "Latest steps" ]
-                                    ]
-                                ]
-                            ]
-                        ]
-                    , ul [ class "nav navbar-nav navbar-right" ]
-                        [ li [ class "dropdown" ]
-                            [ a
-                                [ attribute "aria-expanded" "false"
-                                , attribute "aria-haspopup" "true"
-                                , class "dropdown-toggle"
-                                , attribute "data-toggle" "dropdown"
-                                , href "#"
-                                , attribute "role" "button"
-                                ]
-                                (dropdownText
-                                    ++ [ span [ class "caret" ]
-                                            []
-                                       ]
-                                )
-                            , ul [ class "dropdown-menu" ]
-                                dropdownButtons
-                            ]
-                        ]
-                    , Html.form
-                        [ class "nav navbar-form navbar-right"
-                        , attribute "role" "search"
-                        ]
-                        [ App.map LiveSearchMsg (LiveSearch.view model)
-                        , button
-                            [ type' "submit"
-                            , class "btn btn-default"
-                            ]
-                            [ fontAwesome "search fa-lg" ]
-                        ]
-                    ]
-                ]
-            ]
+
+    in [ Layout.row []
+          [ Layout.title
+              [ ]
+              ([ if model.hydraConfig.logo == "" then
+                  text ""
+                else
+                  img
+                      ([ src model.hydraConfig.logo
+                      , alt "Hydra Logo"
+                      , class "logo"
+                      , style [ ( "height", "37px" ), ( "margin", "5px" ) ]
+                      ] ++ (onClickPage Home))
+                      []
+              ] ++ (breadCrumbs model))
+          , Layout.spacer
+          , Layout.navigation []
+              [ App.map LiveSearchMsg (LiveSearch.view model)
+              , span [] (Maybe.withDefault [] (Maybe.map (\user -> [ text user.name ]) model.user))
+              , Menu.render Mdl [1] model.mdl
+                 [ Menu.ripple
+                 , Menu.bottomRight
+                 , Menu.icon "account_circle" ]
+                 menuItems
+               ]
+          ]
+       ]

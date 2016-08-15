@@ -4,99 +4,92 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Maybe
 import List
-import Components.Breadcrumbs exposing (breadCrumbs)
-import Components.Navbar exposing (navbarView)
+import Material.Scheme
+import Material.Color as Color
+import Material.Layout as Layout
+import Material.Options as Options
+import Material.Footer as Footer
+
+import Components.Navbar as Navbar
 import Pages.Project exposing (..)
 import Pages.Jobset exposing (..)
-import Msg exposing (Msg)
+import Msg exposing (..)
 import Models exposing (..)
-import Page exposing (..)
 import Utils exposing (..)
+import Urls exposing (..)
 
 
 view : AppModel -> Html Msg
 view model =
-    div []
-        [ navbarView model
-        , div [ class "container" ]
-            [ (alertView model.alert)
-            , (breadCrumbs model)
-            , div [ class "row"
-                  , style [("min-height", "500px")] ]
-                (pageToView model)
-            , footer
-                [ class "text-center"
-                , style [ ( "margin-top", "30px" ) ]
-                ]
-                [ small []
-                    [ a [ href "http://nixos.org/hydra/" ]
-                        [ text "Hydra " ]
-                    , span []
-                        [ text model.hydraConfig.hydraVersion ]
-                    , p []
-                        [ a [ href "http://nixos.org/nix/" ]
-                            [ text "Nix " ]
-                        , span []
-                            [ text model.hydraConfig.nixVersion ]
-                        ]
-                    ]
-                ]
-            ]
-        ]
+  Options.div
+    [ ]
+    [ Material.Scheme.topWithScheme Color.BlueGrey Color.LightBlue <|
+        Layout.render Mdl model.mdl
+              [ Layout.fixedHeader ]
+              { header = Navbar.view model
+              , drawer = []
+              , tabs = ( Navbar.tabs model, [ Color.background (Color.color Color.LightBlue Color.A700) ] )
+              , main = viewBody model
+              }
+    ]
+
+
+viewBody : AppModel -> List (Html Msg)
+viewBody model =
+  let
+    softwareLink name url version =
+      p []
+           [ a [ href url ]
+               [ text name ]
+           , span []
+               [ text " @ "
+              , text version ]
+           ]
+  in Options.div
+       [ Options.css "margin" "30px"
+       , Options.css "min-height" "100%"
+       ]
+       (pageToView model)
+  :: [ Footer.mini [ Options.css "position" "absolute"
+                   , Options.css "bottom" "-70px"
+                   , Options.css "width" "100%"]
+      { left = Footer.left []
+                 [ Footer.logo
+                     []
+                     []
+                  ]
+      , right = Footer.right []
+                 [ Footer.logo
+                     []
+                     [ Footer.html <| softwareLink "Nix" "http://nixos.org/nix/" model.hydraConfig.nixVersion
+                     , Footer.html <| softwareLink "Hydra" "http://nixos.org/hydra/" model.hydraConfig.hydraVersion
+                     ]
+                 ]
+      }
+  ]
 
 
 pageToView : AppModel -> List (Html Msg)
 pageToView model =
     case model.currentPage of
         Home ->
-            projectsView model.projects
+            Pages.Project.view model model.currentPage
 
         Project name ->
-            case List.head (List.filter (\p -> p.name == name) model.projects) of
-                Just project ->
-                    projectView project
-
-                Nothing ->
-                    render404 ("Project " ++ name ++ " does not exist.")
+            Pages.Project.view model model.currentPage
 
         NewProject ->
-            newProjectView model
+            Pages.Project.view model model.currentPage
 
         Jobset projectName jobsetName ->
             case List.head (List.filter (\p -> p.name == projectName) model.projects) of
                 Just project ->
                     case List.head (List.filter (\j -> j.name == jobsetName) project.jobsets) of
                         Just jobset ->
-                            jobsetView jobset
+                            jobsetView model jobset
 
                         Nothing ->
                             render404 ("Jobset " ++ jobsetName ++ " does not exist.")
 
                 Nothing ->
                     render404 ("Project " ++ projectName ++ " does not exist.")
-
-
-alertView : Maybe Alert -> Html Msg
-alertView alert =
-    case alert of
-        Nothing ->
-            div [] []
-
-        Just value ->
-            let
-                kind =
-                    case value.kind of
-                        Danger ->
-                            "danger"
-
-                        Success ->
-                            "success"
-
-                        Info ->
-                            "info"
-
-                        Warning ->
-                            "warning"
-            in
-                div [ class ("alert alert-" ++ kind) ]
-                    [ text ("Error: " ++ value.msg) ]
