@@ -4,14 +4,14 @@ import Http
 import Task
 import Json.Decode as Json
 import Json.Decode exposing ((:=))
+import Material
 import Navigation
 
 import Msg exposing (..)
 import Models exposing (..)
-import Page exposing (Page)
 import Update exposing (..)
 import View exposing (..)
-import Urls exposing (urlParser)
+import Urls exposing (..)
 
 
 init : Result String Page -> ( AppModel, Cmd Msg )
@@ -20,7 +20,7 @@ init result =
         ( model, cmds ) =
             urlUpdate result initialModel
     in
-        model ! [ doInit, cmds ]
+        model ! [ doInit, Material.init Mdl, cmds ]
 
 
 doInit : Cmd Msg
@@ -52,5 +52,5 @@ main =
         , update = update
         , view = view
         , urlUpdate = urlUpdate
-        , subscriptions = subscriptions
+        , subscriptions = Material.subscriptions Mdl
         }

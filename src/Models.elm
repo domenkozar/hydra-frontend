@@ -1,6 +1,8 @@
 module Models exposing (..)
 
-import Page exposing (..)
+import Material
+
+import Urls exposing (..)
 
 
 type AlertType
@@ -65,6 +67,7 @@ type alias AppModel =
     , hydraConfig : HydraConfig
     , projects : List Project
     , user : Maybe User
+    , mdl : Material.Model
     , queueStats : QueueStats
     , searchString : String
     , currentPage : Page
@@ -75,7 +78,8 @@ initialModel : AppModel
 initialModel =
     { alert = Nothing
     , user = Nothing
-    , currentPage = Page.Home
+    , mdl = Material.model
+    , currentPage = Home
     , searchString = ""
     , hydraConfig =
         -- TODO: downsize logo, serve it with webpack

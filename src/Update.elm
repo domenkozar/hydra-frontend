@@ -1,16 +1,19 @@
 port module Update exposing (..)
 
+import Material
 import Navigation
 import Models exposing (..)
 import Msg exposing (..)
 import Components.LiveSearch as LiveSearch
-import Page exposing (..)
-import Urls exposing (pageToURL, pageToTitle)
+import Urls exposing (..)
 
 
 update : Msg -> AppModel -> ( AppModel, Cmd Msg )
 update msg model =
     case msg of
+        Mdl msg' ->
+              Material.update msg' model
+
         FetchSucceed init ->
             ( model, Cmd.none )
 

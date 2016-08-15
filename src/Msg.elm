@@ -1,8 +1,10 @@
 module Msg exposing (..)
 
+import Material
 import Http
+
 import Components.LiveSearch as LiveSearch
-import Page
+import Urls exposing (Page)
 
 
 type LoginType
@@ -11,11 +13,12 @@ type LoginType
 
 
 type Msg
-    = FetchSucceed String
+    = Mdl (Material.Msg Msg)
+    | FetchSucceed String
     | FetchFail Http.Error
     | LoginUserClick LoginType
     | LogoutUserClick
     | PreferencesClick
     | LiveSearchMsg LiveSearch.Msg
-    | NewPage Page.Page
+    | NewPage Page
     | ClickCreateProject

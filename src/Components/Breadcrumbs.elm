@@ -3,10 +3,13 @@ module Components.Breadcrumbs exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import List
+import Material.Icon as Icon
+import Material.Options as Options
+
 import Msg exposing (..)
-import Page exposing (..)
 import Models exposing (..)
-import Urls exposing (..)
+import Urls as Urls exposing (..)
+import Utils exposing (onClickPage)
 
 
 type alias Breadcrumb =
@@ -15,35 +18,31 @@ type alias Breadcrumb =
     }
 
 
-renderBreadcrumbs : List Breadcrumb -> Html Msg
+renderBreadcrumbs : List Breadcrumb -> List (Html Msg)
 renderBreadcrumbs breadcrumbs =
     let
+        home = a (onClickPage Home) [ text "Hydra"]
         render breadcrumb =
             case breadcrumb.page of
                 Just page ->
-                    li []
-                        [ a
-                            (onClickPage page)
-                            [ text breadcrumb.name ]
-                        ]
+                    a (onClickPage page)
+                      [ text breadcrumb.name ]
 
                 Nothing ->
-                    li [ class "active" ]
-                        [ text breadcrumb.name ]
-    in
-        if List.length breadcrumbs == 1 then
-            text ""
-        else
-            ol [ class "breadcrumb" ]
-                (List.map render breadcrumbs)
+                    span [ class "active" ]
+                         [ text breadcrumb.name ]
+    in List.intersperse
+         (Icon.view "keyboard_arrow_right"
+                    [ Icon.size36
+                    , Options.css "top" "10px"
+                    , Options.css "position" "relative"
+                    ])
+         (home :: List.map render breadcrumbs)
 
 
-breadCrumbs : AppModel -> Html Msg
+breadCrumbs : AppModel -> List (Html Msg)
 breadCrumbs model =
     let
-        home =
-            [ Breadcrumb "Home" (Just Home) ]
-
         breadcrumbs =
             case model.currentPage of
                 Home ->
@@ -56,8 +55,7 @@ breadCrumbs model =
                     [ Breadcrumb project Nothing ]
 
                 Jobset project jobset ->
-                    [ Breadcrumb project (Just (Page.Project project))
+                    [ Breadcrumb project (Just (Urls.Project project))
                     , Breadcrumb jobset Nothing
                     ]
-    in
-        renderBreadcrumbs (home ++ breadcrumbs)
+    in renderBreadcrumbs breadcrumbs
