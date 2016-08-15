@@ -7,6 +7,8 @@ import String
 import Material
 import Material.Textfield as Textfield
 import Material.Color as Color
+import Material.Button as Button
+import Material.Icon as Icon
 import Material.Options as Options
 
 import Models exposing (..)
@@ -95,17 +97,29 @@ update msg model =
               Material.update msg' model
 
 
-view : AppModel -> Html (Msg)
+view : AppModel -> Html Msg
 view model =
-  Textfield.render Mdl [0] model.mdl
-    [ Textfield.label "Search"
-    , Textfield.floatingLabel
-    , Textfield.text'
-    , Textfield.onInput SearchInput
-    , onEscape SearchEscape
-    , Textfield.value model.searchString
-    , Textfield.style [ Options.css "border-radius" "0.5em"
-                      , Color.background Color.primaryDark ]
+  span
+    []
+    [ Textfield.render Mdl [0] model.mdl
+        [ Textfield.label "Search"
+        , Textfield.floatingLabel
+        , Textfield.text'
+        , Textfield.onInput SearchInput
+        , onEscape SearchEscape
+        , Textfield.value model.searchString
+        , Textfield.style [ Options.css "border-radius" "0.5em"
+                          , Color.background Color.primaryDark ]
+        ]
+    , Icon.view
+        "search"
+        [ Icon.onClick (SearchInput model.searchString) -- TODO: trigger a proper search page
+        , Options.css "position" "relative"
+        , Options.css "top" "8px"
+        , Options.css "right" "28px"
+        , Options.css "z-index" "100"
+        , Options.css "cursor" "pointer"
+        ]
     ]
 
 onEscape : msg -> Textfield.Property msg

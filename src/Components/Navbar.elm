@@ -74,7 +74,6 @@ view model =
           , Layout.spacer
           , Layout.navigation []
               [ App.map LiveSearchMsg (LiveSearch.view model)
-              , Icon.i "search"
               , span [] (Maybe.withDefault [] (Maybe.map (\user -> [ text user.name ]) model.user))
               , Menu.render Mdl [1] model.mdl
                  [ Menu.ripple
