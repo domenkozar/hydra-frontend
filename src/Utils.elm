@@ -6,6 +6,7 @@ import Html.Events exposing (..)
 import Json.Decode as Json
 import Material.Elevation as Elevation
 import Material.Button as Button
+import Material.Color as Color
 import Material.Icon as Icon
 import Material.Options as Options
 import Msg exposing (..)
@@ -42,29 +43,46 @@ optionalTag doInclude html =
 statusLabels : Int -> Int -> Int -> List (Html Msg)
 statusLabels succeeded failed queued =
   [ optionalTag (succeeded > 0)
-      (span [ class "label label-success"
-            , title "Jobs succeeded" ]
-          [ text (toString succeeded) ]
+      (badge
+        (Color.color Color.Green Color.S500)
+        [ Options.attribute <| title "Jobs succeeded" ]
+        [ text (toString succeeded) ]
       )
   , optionalTag (failed > 0)
-      (span []
-          [ text " " ]
-      )
-  , optionalTag (failed > 0)
-      (span [ class "label label-danger"
-            , title "Jobs failed" ]
-          [ text (toString failed) ]
+      (badge
+        (Color.color Color.Red Color.S500)
+        [ Options.attribute <| title "Jobs failed" ]
+        [ text (toString failed) ]
       )
   , optionalTag (queued > 0)
-      (span []
-          [ text " " ]
-      )
-  , optionalTag (queued > 0)
-      (span [ class "label label-default"
-            , title "Jobs in queue" ]
+    (badge
+      (Color.color Color.Grey Color.S500)
+      [ Options.attribute <| title "Jobs in queue" ]
           [ text (toString queued) ]
       )
   ]
+
+
+badge : Color.Color -> List (Options.Property c Msg) -> List (Html Msg) -> Html Msg
+badge color properties content =
+  Options.span
+    ([ Options.css "border-radius" "9px"
+    , Options.css "padding" "3px 5px"
+    , Options.css "line-height" "14px"
+    , Options.css "white-space" "nowrap"
+    , Options.css "font-weight" "bold"
+    , Options.css "font-size" "12px"
+    , Options.css "margin" "0 3px"
+    , Options.css "cursor" "help"
+    , Options.css "color" (if color == Color.white then "#000" else "#FFF")
+    , Color.background color
+    ] ++ properties)
+    content
+
+
+whiteBadge : List (Options.Property c Msg) -> List (Html Msg) -> Html Msg
+whiteBadge properties content =
+  badge Color.white properties content
 
 
 render404 : String -> List (Html Msg)

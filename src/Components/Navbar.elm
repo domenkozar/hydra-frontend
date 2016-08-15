@@ -8,6 +8,7 @@ import Material.Layout as Layout
 import Material.Icon as Icon
 import Material.Menu as Menu
 import Material.Options as Options
+import Material.Color as Color
 import Material.Textfield as Textfield
 
 import Msg exposing (..)
@@ -20,9 +21,9 @@ import Utils exposing (..)
 
 tabs : AppModel -> List (Html Msg)
 tabs model =
-  [ span [] [ strong [] [ text (toString model.queueStats.numBuilding)], text " in progress" ]
-  , span [] [ strong [] [ text (toString model.queueStats.numWaiting)], text " in queue" ]
-  , span [] [ strong [] [ text (toString model.queueStats.numMachines) ], text " machines" ]
+  [ span [] [ whiteBadge [] [ text (toString model.queueStats.numBuilding)], text " in progress"]
+  , span [] [ whiteBadge [] [ text (toString model.queueStats.numWaiting)], text " in queue" ]
+  , span [] [ whiteBadge [] [ text (toString model.queueStats.numMachines) ], text " machines" ]
   , text "evaluations"
   , text "builds"
   , text "steps"
