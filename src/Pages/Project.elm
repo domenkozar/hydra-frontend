@@ -30,7 +30,7 @@ view model page =
       Project name ->
           case List.head (List.filter (\p -> p.name == name) model.projects) of
               Just project ->
-                  [ renderProject model project ]
+                  [ renderProject model 0 project ]
 
               Nothing ->
                   render404 ("Project " ++ name ++ " does not exist.")
@@ -45,7 +45,7 @@ projectsView : AppModel -> List Project -> List (Html Msg)
 projectsView model projects =
     let
         newprojects =
-            List.map (renderProject model) (search projects)
+            List.indexedMap (renderProject model) (search projects)
     in
         renderHeader model "Projects" Nothing (Just NewProject)
             ++ if List.isEmpty newprojects then
@@ -110,8 +110,8 @@ newProjectView model =
     ]
 
 
-renderProject : AppModel -> Project -> Html Msg
-renderProject model project =
+renderProject : AppModel -> Int -> Project -> Html Msg
+renderProject model i project =
   Options.div
     [ Elevation.e2
     , Options.css "margin" "30px"
@@ -128,7 +128,7 @@ renderProject model project =
             [ class "hidden-xs" ]
             [ text ("(" ++ project.description ++ ")") ]
       -- TODO: correct index
-        , Menu.render Mdl [4] model.mdl
+        , Menu.render Mdl [i + 10] model.mdl
            [ Menu.ripple
            , Menu.bottomRight
            , Options.css "float" "right"
