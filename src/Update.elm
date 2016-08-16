@@ -86,7 +86,6 @@ urlUpdate result model =
 
 
 -- Ports
--- initialize jquery popover elements
 
 
 port title : String -> Cmd msg
