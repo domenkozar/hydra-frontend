@@ -15,9 +15,6 @@ module.exports = {
 
   module: {
     loaders: [
-      { test: /bootstrap-sass[\/\\]assets[\/\\]javascripts[\/\\]/, loader: 'imports?jQuery=jquery' },
-      { test: /\.(woff2?|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: 'url?limit=10000' },
-      { test: /\.(ttf|eot)(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: 'file' },
       {
         test:    /\.html$/,
         include: /src/,
