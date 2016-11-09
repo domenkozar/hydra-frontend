@@ -8,8 +8,6 @@ import Material.Layout as Layout
 import Material.Icon as Icon
 import Material.Menu as Menu
 import Material.Options as Options
-import Material.Color as Color
-import Material.Textfield as Textfield
 
 import Msg exposing (..)
 import Models exposing (AppModel)

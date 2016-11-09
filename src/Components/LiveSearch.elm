@@ -7,7 +7,6 @@ import String
 import Material
 import Material.Textfield as Textfield
 import Material.Color as Color
-import Material.Button as Button
 import Material.Icon as Icon
 import Material.Options as Options
 
