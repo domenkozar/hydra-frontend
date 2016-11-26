@@ -12,7 +12,7 @@ import Material.Footer as Footer
 
 import Components.Navbar as Navbar
 import Pages.Project exposing (..)
-import Pages.Jobset exposing (..)
+import Pages.Jobset as Jobset exposing (..)
 import Msg exposing (..)
 import Models exposing (..)
 import Utils exposing (..)
@@ -86,7 +86,7 @@ pageToView model =
                 Just project ->
                     case List.head (List.filter (\j -> j.name == jobsetName) project.jobsets) of
                         Just jobset ->
-                            jobsetView model jobset
+                            Jobset.view model
 
                         Nothing ->
                             render404 ("Jobset " ++ jobsetName ++ " does not exist.")

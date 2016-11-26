@@ -14,12 +14,11 @@ import Utils exposing (..)
 import Urls as Urls exposing(..)
 
 
-evaluations : List (Int)
-evaluations = [1, 2, 3]
-
-
-jobsetView : AppModel -> Jobset -> List (Html Msg)
-jobsetView model jobset =
+view : AppModel -> List (Html Msg)
+view model =
+  case model.jobsetPage of
+    Err _ -> [p [] [ text "TODO"]]
+    Ok jobset ->
   renderHeader model "Jobset" (Just jobset.name) Nothing
   ++
     [ Tabs.render Mdl [4] model.mdl
@@ -80,7 +79,7 @@ jobsetView model jobset =
                     ]
                   ]
                 , Table.tbody []
-                    (evaluations |> List.map (\evaluation ->
+                    (jobset.evaluations |> List.map (\evaluation ->
                        Table.tr []
                          [ Table.td [] [ a
                                          (onClickPage (Urls.Jobset "123" "foo"))
